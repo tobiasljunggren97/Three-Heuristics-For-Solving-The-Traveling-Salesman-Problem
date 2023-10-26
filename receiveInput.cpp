@@ -45,10 +45,7 @@ int prims(vector<vector<double> > weight, int numPoints){
 
   // create a array to track selected vertex
   // selected will become true otherwise false
-  int selected[numPoints];
-
-  // set selected false initially
-  memset(selected, false, numPoints);
+  vector<int> selected(numPoints);
 
   // set number of edge to 0
   no_edge = 0;
@@ -82,10 +79,10 @@ int prims(vector<vector<double> > weight, int numPoints){
       if (selected[i]) {
         // cout << "selected[i]: " << i << endl;
         for (int j = 0; j < numPoints; j++) {
-          if (!selected[j] && j != i) {  // not in selected and there is an edge
+          if (!selected[j] && weight[i][j] && i != j) {  // not in selected and there is an edge
             // cout << "selected[j] not selected found: " << j << endl;
             if (min > weight[i][j] && i != j) {
-             cout << "new min: " << weight[i][j] << " between " << i << " and " << j << endl;
+            //  cout << "new min: " << weight[i][j] << " between " << i << " and " << j << endl;
               min = weight[i][j];
               x = i;
               y = j;
@@ -108,7 +105,7 @@ int main() {
     // Read input
     int N;
     cin >> N;
-
+    cout << "heklk" << endl;
     vector<double> inner_vector(N);
     vector<vector<double> > weight(N,inner_vector);
     weight = receiveInput(N);
@@ -119,7 +116,7 @@ int main() {
         cout << endl;
     }
     
-
+    cout << "N is " << N << endl;
     prims(weight, N);
 
     return 0;
