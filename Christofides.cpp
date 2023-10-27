@@ -4,12 +4,49 @@
 #include <iomanip>
 #include "GraphChristofides.h"
 #include "MatchingChristofides.h"
+#include <tuple>
+#include "graph.h"
 
 
 using namespace std;
 
-int prims() {
-    return 0;
+vector<vector<int> > prims(Graph g){
+  int numPoints = g.getN();
+  int numEdges = 0;  
+  vector<int> handled(numPoints);
+  handled[0] = true;
+  vector<vector<int> > adjacencyList(numPoints);
+
+  int node1;  
+  int node2;  
+
+  while (numEdges < numPoints - 1) {
+
+    int min = numeric_limits<int>::max();
+    node1 = 0;
+    node2 = 0;
+
+    for (int i = 0; i < numPoints; i++) {
+      if (handled[i]) {
+        for (int j = 0; j < numPoints; j++) {
+          if (!handled[j] && g.getWeight(i,j)) {  // not in selected and there is an edge
+            if (min > g.getWeight(i,j) && i != j) {
+              min = g.getWeight(i,j);
+              node1 = i;
+              node2 = j;
+            }
+          }
+        }
+      }
+    }
+    
+    adjacencyList[node1].push_back(node2);
+    adjacencyList[node2].push_back(node1);
+    handled[node2] = true;
+    numEdges++;
+  }
+
+  return adjacencyList;    
 }
 
 pair<GraphC, vector<double> > ReadWeightedGraph(vector<vector<int> > adjacencyList, vector<vector<double> > weights, int numVertices, int numEdges) {
@@ -57,7 +94,7 @@ int minimum_weight_matching(vector<vector<int> > adjacencyList, vector<vector<do
     return 0;
 }
 
-int eularian_tour() {
+int eulerian_tour() {
     return 0;
 }
 
@@ -65,11 +102,18 @@ int tsp_tour() {
     return 0;
 }
 
-int christofides() {
+int cristofides(Graph g) {
     // Run prims algorithm to get neighbourlist
-
+    g.setAdjancecyList(prims(g));
+    g.printAdjacencyList();
     // Create S = { i : len(neightbours(i)) % 2 != 0 }
-
+    vector<int> S;
+    for(int i = 0; i < g.getN(); i++){
+        if(g.getNeighbors(i).size() % 2 != 0){
+            cout << i << " has uneven number of neighbours" << endl;
+            S.push_back(i);
+        }
+    }
     // Find minimum weight matching M in S
 
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
@@ -79,6 +123,7 @@ int christofides() {
     // Generate TSP tour from Eularian tour
     return 0;
 }
+
 
 // JUST A TEST
 // int main() {
