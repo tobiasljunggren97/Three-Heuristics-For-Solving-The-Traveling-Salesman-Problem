@@ -7,15 +7,15 @@
 #include <vector>
 using namespace std;
 
-class Graph
+class GraphC
 {
 public:
 	//n is the number of vertices
 	//edges is a list of pairs representing the edges (default = empty list)
-	Graph(int n, const list< pair<int, int> > & edges = list< pair<int, int> >());
+	GraphC(int n, const list< pair<int, int> > & edges = list< pair<int, int> >());
 
 	//Default constructor creates an empty graph
-	Graph(): n(0), m(0) {};
+	GraphC(): n(0), m(0) {};
 
 	//Returns the number of vertices
 	int GetNumVertices() const { return n; };

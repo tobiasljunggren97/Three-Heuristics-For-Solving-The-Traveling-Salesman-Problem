@@ -2,7 +2,7 @@
 
 // OBS: This is the graph class borrowed from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
 
-Graph::Graph(int n, const list< pair<int, int> > & edges):
+GraphC::GraphC(int n, const list< pair<int, int> > & edges):
 	n(n),
 	m(edges.size()),
 	adjMat(n, vector<bool>(n, false)),
@@ -19,7 +19,7 @@ Graph::Graph(int n, const list< pair<int, int> > & edges):
 	}
 }
 
-pair<int, int> Graph::GetEdge(int e) const
+pair<int, int> GraphC::GetEdge(int e) const
 {
 	if(e > (int)edges.size())
 		throw "Error: edge does not exist";
@@ -27,7 +27,7 @@ pair<int, int> Graph::GetEdge(int e) const
 	return edges[e];
 }
 
-int Graph::GetEdgeIndex(int u, int v) const
+int GraphC::GetEdgeIndex(int u, int v) const
 {
 	if( u > n or
 		v > n )
@@ -39,7 +39,7 @@ int Graph::GetEdgeIndex(int u, int v) const
 	return edgeIndex[u][v];
 }
 
-void Graph::AddVertex()
+void GraphC::AddVertex()
 {
 	for(int i = 0; i < n; i++)
 	{
@@ -52,7 +52,7 @@ void Graph::AddVertex()
 	adjList.push_back( list<int>() );
 }
 
-void Graph::AddEdge(int u, int v)
+void GraphC::AddEdge(int u, int v)
 {
 	if( u > n or
 		v > n )
@@ -68,7 +68,7 @@ void Graph::AddEdge(int u, int v)
 	edgeIndex[u][v] = edgeIndex[v][u] = m++;
 }
 
-const list<int> & Graph::AdjList(int v) const
+const list<int> & GraphC::AdjList(int v) const
 {
 	if(v > n)
 		throw "Error: vertex does not exist";
@@ -76,7 +76,7 @@ const list<int> & Graph::AdjList(int v) const
 	return adjList[v];
 }
 
-const vector< vector<bool> > & Graph::AdjMat() const
+const vector< vector<bool> > & GraphC::AdjMat() const
 {
 	return adjMat;
 }

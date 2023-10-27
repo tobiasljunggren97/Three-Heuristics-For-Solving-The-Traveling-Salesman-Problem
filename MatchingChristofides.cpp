@@ -2,7 +2,7 @@
 
 // OBS Borrowed from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
 
-Matching::Matching(const Graph & G):
+Matching::Matching(const GraphC & G):
 	G(G),
 	outer(2*G.GetNumVertices()),
 	deep(2*G.GetNumVertices()),
