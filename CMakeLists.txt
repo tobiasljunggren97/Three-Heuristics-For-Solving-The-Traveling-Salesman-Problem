@@ -32,4 +32,9 @@ add_subdirectory(test)
 add_executable(
     tsp
     main.cpp
+    Graph.cpp
+    Christofides.cpp
+    BinaryHeapChristofides.cpp
+    GraphChristofides.cpp
+    MatchingChristofides.cpp
 )
