@@ -47,8 +47,18 @@ double calculateEuclidianDistance(const tuple<double, double> &p1, const tuple<d
     return round(sqrt(dx * dx + dy * dy)); // Round as per instructions
 };
 
-void Graph::receiveInput()
+void Graph::receiveInput(string filename)
 {
+    if (filename != "")
+    {   
+        //Redirect input from file to stdin
+        if(!freopen(filename.c_str(), "r", stdin))
+        {
+            cout << "ERROR: Filename not valid (Kom ihåg att redirecta från rätt mapp, så typ '../sampleInput1.txt')" << endl;
+            exit(1);
+        }
+    }
+
     cin >> N;
     // Initiate adjancency list
     adjacencyList = vector<vector<int>>(N);
