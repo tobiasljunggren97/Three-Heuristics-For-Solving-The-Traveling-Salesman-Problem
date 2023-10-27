@@ -8,3 +8,11 @@ add_executable(
     tsp
     main.cpp
 )
+
+add_executable(
+    min-weight-perfect-matching
+    Christofides.cpp
+    BinaryHeapChristofides.cpp
+    GraphChristofides.cpp
+    MatchingChristofides.cpp
+)
