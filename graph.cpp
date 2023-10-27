@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "Graph.h"
 
 //----------------------- GETTERS AND SETTERS --------------------//
 int Graph::getWeight(int x, int y) {return weight[x][y];}

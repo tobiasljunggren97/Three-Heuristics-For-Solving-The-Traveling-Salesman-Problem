@@ -7,10 +7,7 @@ project(TSPAVALG)
 add_executable(
     tsp
     main.cpp
-)
-
-add_executable(
-    min-weight-perfect-matching
+    Graph.cpp
     Christofides.cpp
     BinaryHeapChristofides.cpp
     GraphChristofides.cpp

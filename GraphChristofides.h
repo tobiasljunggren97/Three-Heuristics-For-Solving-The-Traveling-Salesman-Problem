@@ -1,5 +1,5 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef GRAPHC_H
+#define GRAPHC_H
 
 // OBS: This is the graph class borrowed from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
 

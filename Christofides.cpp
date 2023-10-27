@@ -4,8 +4,8 @@
 #include <iomanip>
 #include "GraphChristofides.h"
 #include "MatchingChristofides.h"
+#include "Graph.h"
 #include <tuple>
-#include "graph.h"
 
 
 using namespace std;
@@ -63,8 +63,9 @@ pair<GraphC, vector<double> > ReadWeightedGraph(vector<vector<int> > adjacencyLi
 }
 
 int minimum_weight_matching(vector<vector<int> > adjacencyList, vector<vector<double> > weights, int numVertices, int numEdges) {
-    // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
-    GraphC G;
+    
+  // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
+  GraphC G;
 	vector<double> cost;
 	
 	//Read the graph
@@ -102,7 +103,7 @@ int tsp_tour() {
     return 0;
 }
 
-int cristofides(Graph g) {
+int christofides(Graph g) {
     // Run prims algorithm to get neighbourlist
     g.setAdjancecyList(prims(g));
     g.printAdjacencyList();
