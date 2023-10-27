@@ -14,36 +14,21 @@ private:
     vector<vector<int> > adjacencyList;
     void receiveInput();
 public:
-    Graph(){
-        receiveInput();
-    };
+    //Constructors
+    Graph(){ receiveInput(); };
 
-    int getWeight(int x, int y) {
-        return weight[x][y];
-    }
-    void setAdjancecyList(vector<vector<int> > adjList){
-        adjacencyList = adjList;
-    }
-    int getN(){
-        return N;
-    }
+    //Getters
+    int getWeight(int x, int y);
+    int getN();
+    vector<int> getNeighbors(int node);
+
+    //Setters
+    void setAdjancecyList(vector<vector<int> > adjList);
+    void addNeighbor(int node, int neighbor);
+    void removeNeighbor(int node, int neighbor); //ONLY REMOVES ONE NEIGHBOR NODE IF THERE ARE DUPLICATE EDGES
+
+    //Helper functions
     void printAdjacencyList();
-    void addNeighbor(int node, int neighbor){
-        adjacencyList[node].push_back(neighbor);
-    }
-    //ONLY REMOVES ONE NEIGHBOR IF THERE ARE DUPLICATES
-    void removeNeighbor(int node, int neighbor){
-        for(int i = 0; i < adjacencyList[node].size(); i++){
-            if(adjacencyList[node][i] == neighbor){
-                adjacencyList[node].erase(adjacencyList[node].begin() + i);
-                return;
-            }
-        }
-    }
-    vector<int> getNeighbors(int node){
-        return adjacencyList[node];
-    }
-    // int getNumEdges();
 };
 
 

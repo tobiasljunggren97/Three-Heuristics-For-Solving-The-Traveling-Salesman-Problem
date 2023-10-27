@@ -1,5 +1,36 @@
 #include "graph.h"
 
+//----------------------- GETTERS AND SETTERS --------------------//
+int Graph::getWeight(int x, int y) {return weight[x][y];}
+int Graph::getN(){return N;}
+vector<int> Graph::getNeighbors(int node){
+        return adjacencyList[node];
+    }
+
+void Graph::setAdjancecyList(vector<vector<int> > adjList){ adjacencyList = adjList; }
+void Graph::addNeighbor(int node, int neighbor){ 
+    adjacencyList[node].push_back(neighbor);
+    adjacencyList[neighbor].push_back(node);
+    }
+
+//ONLY REMOVES ONE NEIGHBOR NODE IF THERE ARE DUPLICATE EDGES
+void Graph::removeNeighbor(int node, int neighbor){
+        for(int i = 0; i < adjacencyList[node].size(); i++){
+            if(adjacencyList[node][i] == neighbor){
+                adjacencyList[node].erase(adjacencyList[node].begin() + i);
+                return;
+            }
+        }
+        for(int i = 0; i < adjacencyList[neighbor].size(); i++){
+            if(adjacencyList[neighbor][i] == node){
+                adjacencyList[neighbor].erase(adjacencyList[neighbor].begin() + i);
+                return;
+            }
+        }
+    }
+
+
+//----------------------- HELPER FUNCTIONS -----------------------//
 double calculateEuclidianDistance(const tuple<double, double>& p1, const tuple<double, double>& p2) {
     double dx = get<0>(p1) - get<0>(p2);
     double dy = get<1>(p1) - get<1>(p2); 
@@ -8,7 +39,6 @@ double calculateEuclidianDistance(const tuple<double, double>& p1, const tuple<d
 };
 
 void Graph::receiveInput() {
-    
     cin >> N;
     //Initiate adjancency list
     adjacencyList = vector<vector<int> >(N);
@@ -19,13 +49,10 @@ void Graph::receiveInput() {
     for (int i = 0; i < N; ++i) {
         cin >> point1 >> point2;
         ponts[i] = make_tuple(point1, point2);
-        // cin >> points[i].x >> points[i].y;
     }
-
     for (int i = 0; i < N; ++i) {
         for (int j = i + 1; j < N; ++j) {
             double distance = calculateEuclidianDistance(ponts[i], ponts[j]);
-            // cout << "Distance between points " << i << " and " << j << ": " << distance << endl;
             weight[i][j] = distance;
             weight[j][i] = distance;
         }
@@ -33,7 +60,6 @@ void Graph::receiveInput() {
 };
 
 
-//HELPER FUNCTION
 // Print adjacency list function
 void Graph::printAdjacencyList() {
     for (int i = 0; i < N; ++i) {
