@@ -18,10 +18,19 @@ add_subdirectory(googletest)
 
 set(Headers
     Christofides.h
+    BinaryHeapChristofides.h
+    GlobalsChristofides.h
+    GraphChristofides.h
+    MatchingChristofides.h
+    Graph.h
 )
 
 set(Sources
     Christofides.cpp
+    BinaryHeapChristofides.cpp
+    GraphChristofides.cpp
+    MatchingChristofides.cpp
+    Graph.cpp
     main.cpp
 )
 
