@@ -5,6 +5,7 @@
 #include "GraphChristofides.h"
 #include "MatchingChristofides.h"
 #include "Graph.h"
+#include "Christofides.h"
 #include <tuple>
 
 
