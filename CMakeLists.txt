@@ -6,5 +6,5 @@ project(TSPAVALG)
 
 add_executable(
     tsp
-    receiveInput.cpp
+    main.cpp
 )

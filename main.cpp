@@ -1,20 +1,20 @@
-#include "receiveInput.cpp"
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <iomanip>
+#include "cristofides.cpp"
+#include <tuple>
+#include "graph.cpp"
+#include "graph.h"
+
 using namespace std;
 
 int main() {
-    // Read input
-    // int N = 
-
-    // vector<double> inner(N);
-    // vector<vector<double>> weight(N,inner);
-    // weight = receiveInput();
-
-
-    // Call heuristics from other files
-    int numPoints;
-    cin >> numPoints;
-    vector<vector<double> > weights(numPoints, vector<double>(numPoints));
-    weights = receiveInput(numPoints);
-    
+    //Initializing Graph will read input and create weight matrix
+    Graph g = Graph();
+    cout << "Calling Cristofides from main.cpp" << endl;
+    cristofides(g);  
     return 0;
 }
+
+
