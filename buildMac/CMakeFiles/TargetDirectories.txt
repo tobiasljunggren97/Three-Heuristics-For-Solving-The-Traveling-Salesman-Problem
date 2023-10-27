@@ -1,3 +1,0 @@
-/Users/vaskarn/Documents/Local/Datateknik/Year4/Avalg/Projekt/TSPAvalg/buildMac/CMakeFiles/tsp.dir
-/Users/vaskarn/Documents/Local/Datateknik/Year4/Avalg/Projekt/TSPAvalg/buildMac/CMakeFiles/edit_cache.dir
-/Users/vaskarn/Documents/Local/Datateknik/Year4/Avalg/Projekt/TSPAvalg/buildMac/CMakeFiles/rebuild_cache.dir
