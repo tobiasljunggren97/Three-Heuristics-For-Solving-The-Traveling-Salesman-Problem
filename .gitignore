@@ -4,4 +4,6 @@ Makefile
 CmakeFiles
 tsp
 .vscode
-buildMac
+/build
+/buildMac
+/buildWin
