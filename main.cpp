@@ -2,7 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
-#include "cristofides.cpp"
+#include "Christofides.cpp"
 #include <tuple>
 #include "graph.cpp"
 #include "graph.h"
