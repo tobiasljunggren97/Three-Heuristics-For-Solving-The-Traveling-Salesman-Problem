@@ -11,12 +11,12 @@
 
 using namespace std;
 
-vector<vector<int> > prims(Graph g){
+void prims(Graph &g){
   int numPoints = g.getN();
   int numEdges = 0;  
   vector<int> handled(numPoints);
   handled[0] = true;
-  vector<vector<int> > adjacencyList(numPoints);
+  // vector<vector<int> > adjacencyList(numPoints);
 
   int node1;  
   int node2;  
@@ -41,41 +41,59 @@ vector<vector<int> > prims(Graph g){
       }
     }
     
-    adjacencyList[node1].push_back(node2);
-    adjacencyList[node2].push_back(node1);
+    g.addNeighbor(node1, node2);
     handled[node2] = true;
     numEdges++;
-  }
-
-  return adjacencyList;    
+  } 
 }
 
-pair<GraphC, vector<double> > ReadWeightedGraph(vector<vector<int> > adjacencyList, vector<vector<double> > weights, int numVertices, int numEdges) {
+pair<GraphC, vector<double> > ReadWeightedGraph(Graph &graph, vector<int> &S) {
+    int numVertices = S.size();
     GraphC G(numVertices);
-    vector<double> cost(numEdges);
-    cout << "HEJ"<< endl;
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < adjacencyList[i].size(); j++) { //ADJLIST MUST BE SORTED IN ASCENDING ORDER
-            G.AddEdge(i, adjacencyList[i][j]);
-            cost.push_back(weights[i][j]);
-        }
+    for (int a = 0; a < numVertices; a++) {
+      cout << S[a] << endl;
+      cout << graph.getNeighbors(S[a])[0] << endl;
     }
+    cout << "HEJ" << endl;
+    vector<double> cost(numVertices * (numVertices-1)/2);
+    try {
+        for (int i = 0; i < numVertices; i++) {
+            for (int j = 0; j < graph.getNeighbors(S[i]).size(); j++) { //ADJLIST MUST BE SORTED IN ASCENDING ORDER
+                G.AddEdge(i, graph.getNeighbors(S[i])[j]);
+                cost.push_back(graph.getWeight(S[i], j));
+            }
+        }
+    } catch (const char* msg) {
+        cout << msg << endl;
+    }
+    // for (int i = 0; i < numVertices; i++) {
+    //     for (int j = 0; j < graph.getNeighbors(S[i]).size(); j++) { //ADJLIST MUST BE SORTED IN ASCENDING ORDER
+    //         G.AddEdge(i, graph.getNeighbors(S[i])[j]);
+    //         cost.push_back(graph.getWeight(S[i], j));
+    //     }
+    // }
     return make_pair(G, cost);
 }
 
-int minimum_weight_matching(vector<vector<int> > adjacencyList, vector<vector<double> > weights, int numVertices, int numEdges) {
+int minimum_weight_matching(Graph &graph, vector<int> &S) {
+    // OBS Example Min-Weight Matching from
     
   // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
   GraphC G;
 	vector<double> cost;
 	
 	//Read the graph
-	pair< GraphC, vector<double> > p = ReadWeightedGraph(adjacencyList, weights, numVertices, numEdges);
+	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
     
 	//pair< GraphC, vector<double> > p = CreateRandomGraph();
 	G = p.first;
 	cost = p.second;
-
+  
+  for (int i = 0; i < G.GetNumEdges(); i++)
+	{
+		pair<int, int> e = G.GetEdge(i);
+		cout << e.first << " " << e.second << " " << cost[i] << endl;
+	}
 	//Create a Matching instance passing the graph
 	Matching M(G);
 
@@ -104,9 +122,10 @@ int tsp_tour() {
     return 0;
 }
 
-int christofides(Graph g) {
+int christofides(Graph &g) {
     // Run prims algorithm to get neighbourlist
-    g.setAdjancecyList(prims(g));
+    prims(g);
+
     g.printAdjacencyList();
     // Create S = { i : len(neightbours(i)) % 2 != 0 }
     vector<int> S;
@@ -117,7 +136,7 @@ int christofides(Graph g) {
         }
     }
     // Find minimum weight matching M in S
-
+    minimum_weight_matching(g, S);
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
