@@ -50,34 +50,24 @@ void prims(Graph &g){
 pair<GraphC, vector<double> > ReadWeightedGraph(Graph &graph, vector<int> &S) {
     int numVertices = S.size();
     GraphC G(numVertices);
-    for (int a = 0; a < numVertices; a++) {
-      cout << S[a] << endl;
-      cout << graph.getNeighbors(S[a])[0] << endl;
-    }
-    cout << "HEJ" << endl;
+
     vector<double> cost(numVertices * (numVertices-1)/2);
     try {
         for (int i = 0; i < numVertices; i++) {
-            for (int j = 0; j < graph.getNeighbors(S[i]).size(); j++) { //ADJLIST MUST BE SORTED IN ASCENDING ORDER
-                G.AddEdge(i, graph.getNeighbors(S[i])[j]);
-                cost.push_back(graph.getWeight(S[i], j));
+            for (int j = i+1; j < numVertices; j++) {
+                G.AddEdge(i, j); // Need to be 0-indexed, but if S = [1,4,5] then an edge in G is (0,1) = (S[0], S[1]) = (1,4) in graph
+                cost[G.GetEdgeIndex(i, j)] = graph.getWeight(S[i], S[j]);
             }
         }
     } catch (const char* msg) {
         cout << msg << endl;
     }
-    // for (int i = 0; i < numVertices; i++) {
-    //     for (int j = 0; j < graph.getNeighbors(S[i]).size(); j++) { //ADJLIST MUST BE SORTED IN ASCENDING ORDER
-    //         G.AddEdge(i, graph.getNeighbors(S[i])[j]);
-    //         cost.push_back(graph.getWeight(S[i], j));
-    //     }
-    // }
+
     return make_pair(G, cost);
 }
 
 int minimum_weight_matching(Graph &graph, vector<int> &S) {
-    // OBS Example Min-Weight Matching from
-    
+
   // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
   GraphC G;
 	vector<double> cost;
@@ -89,11 +79,11 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
 	G = p.first;
 	cost = p.second;
   
-  for (int i = 0; i < G.GetNumEdges(); i++)
-	{
-		pair<int, int> e = G.GetEdge(i);
-		cout << e.first << " " << e.second << " " << cost[i] << endl;
-	}
+  // for (int i = 0; i < G.GetNumEdges(); i++)
+	// {
+	// 	pair<int, int> e = G.GetEdge(i);
+	// 	cout << e.first << " " << e.second << " " << cost[i] << endl;
+	// }
 	//Create a Matching instance passing the graph
 	Matching M(G);
 
@@ -109,7 +99,8 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
 	{
 		pair<int, int> e = G.GetEdge( *it );
 
-		cout << e.first << " " << e.second << endl;
+		cout << S[e.first] << " " << S[e.second] << endl;
+    graph.addNeighbor(S[e.first], S[e.second]);
 	}
     return 0;
 }
@@ -125,18 +116,20 @@ int tsp_tour() {
 int christofides(Graph &g) {
     // Run prims algorithm to get neighbourlist
     prims(g);
-
+    cout << "Adjacency list after prims: " << endl;
     g.printAdjacencyList();
     // Create S = { i : len(neightbours(i)) % 2 != 0 }
     vector<int> S;
     for(int i = 0; i < g.getN(); i++){
         if(g.getNeighbors(i).size() % 2 != 0){
-            cout << i << " has uneven number of neighbours" << endl;
+            // cout << i << " has uneven number of neighbours" << endl;
             S.push_back(i);
         }
     }
     // Find minimum weight matching M in S
     minimum_weight_matching(g, S);
+    cout << "Adjacency list after matching: " << endl;
+    g.printAdjacencyList();
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
