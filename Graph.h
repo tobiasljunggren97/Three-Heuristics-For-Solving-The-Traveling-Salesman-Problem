@@ -12,10 +12,11 @@ private:
     int N;  
     vector<vector<double> > weight;
     vector<vector<int> > adjacencyList;
-    void receiveInput();
+    void receiveInput(string filename = "");
 public:
     //Constructors
     Graph(){ receiveInput(); };
+    Graph(string filename){ receiveInput(filename); };
 
     //Getters
     int getWeight(int x, int y);
