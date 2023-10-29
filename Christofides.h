@@ -3,6 +3,6 @@
 
 #include "Graph.h"
 // Only list signatures of the functions that main.cpp needs to call
-int christofides(Graph g);
+int christofides(Graph &g);
 
 #endif
