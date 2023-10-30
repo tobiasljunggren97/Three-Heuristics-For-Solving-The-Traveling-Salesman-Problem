@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "../main.h"
+#include "../Graph.h"
+#include "../Christofides.h"
 using namespace std;
-#define INPUT_DIR "../../test/testInputs/"
+#define TEST_INPUT_DIR "../../test/testInputs/"
 
 
 /*
@@ -24,26 +26,29 @@ To write a test that utilizes a test fixture?
 Begin the test with the macro: TEST_F, instead of TEST. And the group for the test is the name of the test fixture.
 In this particular case: It is SetUpBigGraph. 
 */
-class SetUpBigGraph : public ::testing::Test {
-protected:
-    // Set up code (optional)
-    void SetUp() override {
-        // Initialize common resources or state
-    }
+// class SetUpBigGraph : public ::testing::Test {
+// protected:
+//     Graph g;
+//     // Set up code (optional)
+//     void SetUp() override {
+//         // Initialize common resources or state
+//         string filename = string(TEST_INPUT_DIR) + "setUpBigGraph.txt";
+//         g = Graph(filename);
+//     }
 
-    // Tear down code (optional)
-    void TearDown() override {
-        // Release any resources or clean up
-    }
-};
+//     // Tear down code (optional)
+//     void TearDown() override {
+//         // Release any resources or clean up
+//     }
+// };
 
 /* 
 A test that utilizes test fixture SetUpBigGraph. 
 */
 
-TEST_F(SetUpBigGraph, testFixture1){
-    //ASSERT: very big graph etc.. 
-};
+// TEST_F(SetUpBigGraph, testFixture1){
+//     //ASSERT: very big graph etc.. 
+// };
 
 
 
@@ -57,27 +62,3 @@ Second Argument - the test’s name within the test suite.
 OBS - Don't use underscores for the names of tests.
 
 */
-
-TEST(TestingSuite, basicExampleOfATest)
-{
-    Graph g = Graph();
-
-    EXPECT_TRUE(true);
-}
-
-TEST(TestingSuite, basicExampleOfATest2)
-{
-
-    string filename = "../../test/testInputs/firsttest.txt";
-    // string filename = INPUT_DIR + "firsttest.txt";
-    Graph g = Graph(filename);
-    for(int i = 0; i < g.getN(); i++)
-    {
-        for(int j = 0; j < g.getN(); j++)
-        {
-            ASSERT_EQ(g.getWeight(i,j), g.getWeight(j,i));
-            ASSERT_EQ(g.getWeight(i,j), 1);
-        }
-    }
-}
-
