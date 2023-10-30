@@ -20,8 +20,8 @@ public:
     Graph(string filename){ receiveInput(filename); };
 
     //Getters
-    int getWeight(int x, int y);
-    void setWeight(int x, int y, int w); // For testing
+    int getWeight(int i, int j);
+    void setWeight(int i, int j, int w); // For testing
     int getN();
     vector<int> getNeighbors(int node);
     const vector<vector<int> >& getAdjacencyList(); // For testing
@@ -33,6 +33,8 @@ public:
 
     //Helper functions
     void printAdjacencyList();
+
+    void printWeightMatrix();
 };
 
 

@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include "../main.h"
+#include "../Graph.h"
+#include "../Christofides.h"
 using namespace std;
-#define INPUT_DIR "../../test/testInputs/"
+#define TEST_INPUT_DIR "../../test/testInputs/"
 
 
 /*
@@ -26,9 +28,13 @@ In this particular case: It is SetUpBigGraph.
 */
 // class SetUpBigGraph : public ::testing::Test {
 // protected:
+//     Graph g;
 //     // Set up code (optional)
 //     void SetUp() override {
 //         // Initialize common resources or state
+//         string filename = string(TEST_INPUT_DIR) + "setUpBigGraph.txt";
+//         g = Graph(filename);
+
 //     }
 
 //     // Tear down code (optional)
@@ -57,3 +63,4 @@ Second Argument - the test’s name within the test suite.
 OBS - Don't use underscores for the names of tests.
 
 */
+

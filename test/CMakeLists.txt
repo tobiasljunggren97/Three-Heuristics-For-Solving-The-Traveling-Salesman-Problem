@@ -6,6 +6,7 @@ set(This TestingSuite)
 set(Sources 
     TestingSuite.cpp
     MinWeightTests.cpp
+    GraphClassTests.cpp
 )
 
 add_executable(${This} ${Sources})
