@@ -22,6 +22,7 @@ public:
     int getWeight(int x, int y);
     int getN();
     vector<int> getNeighbors(int node);
+    const vector<vector<int> >& getAdjacencyList();
 
     //Setters
     void setAdjancecyList(vector<vector<int> > adjList);

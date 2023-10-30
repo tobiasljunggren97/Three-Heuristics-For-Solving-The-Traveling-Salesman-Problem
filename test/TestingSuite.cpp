@@ -81,3 +81,36 @@ TEST(TestingSuite, basicExampleOfATest2)
     }
 }
 
+TEST(TestingSuite, minWeightPerfectMatchTest)
+{
+    string filename = string(INPUT_DIR) + "smallgraph.txt";
+    int numVertices;
+    Graph g = Graph(filename);
+
+    string solution = string(INPUT_DIR) + "smallgraphSolution.txt";
+    int numVerticesSolution;
+    Graph g2 = Graph(solution);
+
+    vector<int> S;
+    for (int i = 0; i < g.getN(); i++)
+    {
+        S.push_back(i);
+    }
+
+    const vector<vector<int>> adjacencyListBefore = g.getAdjacencyList();
+    minimum_weight_matching(g, S);
+    const vector<vector<int>> adjacencyListAfter = g.getAdjacencyList();
+    vector<vector<int>> adjacencyListMinWeightPerfectMatch;
+    const vector<vector<int>> solutionAdjacencyList = g2.getAdjacencyList();
+    // Make adjacencyListMinWeightPerfectMatch be the list of edges that is in adjacencyListAfter but not in adjacencyListBefore
+    for (int i = 0; i < adjacencyListAfter.size(); i++)
+    {
+        if (find(adjacencyListBefore.begin(), adjacencyListBefore.end(), adjacencyListAfter[i]) == adjacencyListBefore.end())
+        {
+            adjacencyListMinWeightPerfectMatch.push_back(adjacencyListAfter[i]);
+        }
+    }
+
+    ASSERT_EQ(adjacencyListMinWeightPerfectMatch, solutionAdjacencyList);
+
+}

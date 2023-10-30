@@ -10,6 +10,8 @@ vector<int> Graph::getNeighbors(int node)
     return adjacencyList[node];
 }
 
+const vector<vector<int> >& Graph::getAdjacencyList() { return adjacencyList; }
+
 void Graph::setAdjancecyList(vector<vector<int>> adjList) { adjacencyList = adjList; }
 void Graph::addNeighbor(int node, int neighbor)
 {
