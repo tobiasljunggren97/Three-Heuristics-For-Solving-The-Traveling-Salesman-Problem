@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <gtest/gtest-param-test.h>
 #include <iomanip>
 #include <iostream>
 #include <fstream>
@@ -6,23 +7,39 @@
 using namespace std;
 #define INPUT_DIR "../../test/minWeightInputs/"
 
-// class MinWeightPerfectMatch : public ::testing::Test {
-// protected:
-//     // Set up code (optional)
-//     void SetUp() override {
-//         // Initialize common resources or state
-//     }
+struct FilePair {
+    string file_path;
+    string solution_path;
 
-//     // Tear down code (optional)
-//     void TearDown() override {
-//         // Release any resources or clean up
-//     }
-// };
+    FilePair(string file_path, string solution_path) : file_path(file_path), solution_path(solution_path) {}
+};
 
+class MinWeightPerfectMatch : public ::testing::TestWithParam<FilePair> {
+protected:
+    string file_path;
+    string solution_path;
+    // Set up code (optional)
+    void SetUp() override {
+        FilePair filePair = GetParam();
+        file_path = filePair.file_path;
+        solution_path = filePair.solution_path;
+        // Initialize common resources or state
+    }
 
-TEST(MinWeightPerfectMatch, minWeightPerfectMatchTest)
+    // Tear down code (optional)
+    // void TearDown() override {
+    //     // Release any resources or clean up
+    // }
+};
+
+INSTANTIATE_TEST_SUITE_P(MinWeightPerfectMatchTests, MinWeightPerfectMatch, ::testing::Values(
+    FilePair(string(INPUT_DIR) + string("smallgraph.txt"), string(INPUT_DIR) + string("smallgraphSolution.txt")),
+    FilePair(string(INPUT_DIR) + string("smallgraph.txt"), string(INPUT_DIR) + string("smallgraphIncorrect.txt"))
+));
+
+TEST_P(MinWeightPerfectMatch, minWeightPerfectMatchTest)
 {
-    string filename = string(INPUT_DIR) + "smallgraph.txt";
+    string filename = file_path;
 
     ifstream file(filename);
     if (!file.is_open())
@@ -47,7 +64,13 @@ TEST(MinWeightPerfectMatch, minWeightPerfectMatchTest)
 
     file.close();
 
-    string solution = string(INPUT_DIR) + "smallgraphSolution.txt";
+    string solution = solution_path;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "File: " << filename << endl;
+    cout << "Solution: " << solution << endl;
+    cout << "---------------------------------------------------------" << endl;
+    cout << "---------------------------------------------------------" << endl;
     
     ifstream file2(solution);
     if (!file2.is_open())
@@ -77,11 +100,10 @@ TEST(MinWeightPerfectMatch, minWeightPerfectMatchTest)
     }
 
     const vector<vector<int>> adjacencyListBefore = g.getAdjacencyList();
-    cout << "Before: " << endl;
+
     minimum_weight_matching(g, S);
     const vector<vector<int>> adjacencyListAfter = g.getAdjacencyList();
-    cout << "After: " << endl;
-    g.printAdjacencyList();
+
     vector<vector<int>> adjacencyListMinWeightPerfectMatch;
     const vector<vector<int>> solutionAdjacencyList = g2.getAdjacencyList();
 
