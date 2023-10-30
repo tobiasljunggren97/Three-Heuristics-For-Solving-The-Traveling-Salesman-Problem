@@ -4,11 +4,15 @@ using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
 int Graph::getWeight(int i, int j) { return weight[i][j]; }
+void Graph::setWeight(int i, int j, int w) { weight[i][j] = w; }
+
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
 {
     return adjacencyList[node];
 }
+
+const vector<vector<int> >& Graph::getAdjacencyList() { return adjacencyList; }
 
 void Graph::setAdjancecyList(vector<vector<int>> adjList) { adjacencyList = adjList; }
 void Graph::addNeighbor(int node, int neighbor)
