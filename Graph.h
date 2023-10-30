@@ -30,6 +30,8 @@ public:
 
     //Helper functions
     void printAdjacencyList();
+
+    void printWeightMatrix();
 };
 
 

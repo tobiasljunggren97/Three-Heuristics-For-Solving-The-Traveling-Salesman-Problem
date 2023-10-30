@@ -45,9 +45,9 @@ double calculateEuclidianDistance(const tuple<double, double> &p1, const tuple<d
 void Graph::receiveInput(string filename)
 {
     if (filename != "")
-    {   
-        //Redirect input from file to stdin
-        if(!freopen(filename.c_str(), "r", stdin))
+    {
+        // Redirect input from file to stdin
+        if (!freopen(filename.c_str(), "r", stdin))
         {
             cout << "ERROR: Filename not valid (Kom ihåg att redirecta från rätt mapp, så typ '../sampleInput1.txt')" << endl;
             exit(1);
@@ -89,4 +89,16 @@ void Graph::printAdjacencyList()
         }
         cout << endl;
     }
-}
+};
+
+// Print weight matrix
+void Graph::printWeightMatrix()
+{
+    for (int i = 1; i < N; i++)
+    {
+        for (int j = 0; j <= i - 1; j++)
+        {
+            cout << i << " -- " << weight[i][j] << " -- " << j << endl;
+        }
+    }
+};
