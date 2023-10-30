@@ -96,12 +96,58 @@ int minimum_weight_matching(vector<vector<int> > adjacencyList, vector<vector<do
     return 0;
 }
 
-int eulerian_tour() {
-    return 0;
+vector<int> eulerian_tour(Graph g) {
+
+    vector<int> eularianTour; 
+    int n = g.getN();
+    vector<int> visited(n, 0);
+    // visited[0] = 1; // Start by visiting first node. 
+    int notFinished = 1; 
+    int currentNode = 0; 
+    while(notFinished) {
+
+      vector<int> neighbors = g.getNeighbors(currentNode);
+
+      if (visited[currentNode]) { // we have visited this node before. 
+        notFinished = 0; // Assume we are finished. 
+        for (int i = 0; i < neighbors.size(); i++) { // If we find node not visited, continue. 
+          if (visited[neighbors[i]] == 0) { notFinished = 1; currentNode = neighbors[i]; break;}
+        }
+      }
+      visited[currentNode] = 1; // Visit current node. 
+      eularianTour.push_back(currentNode);
+      
+    }
+    cout << "EULARIAN TOUR: " << endl; 
+    for (int i = 0; i < eularianTour.size(); i++) {
+      cout << " -> " << eularianTour[i]; 
+    }
+    
+
+    return eularianTour;
 }
 
-int tsp_tour() {
-    return 0;
+vector<int> tsp_tour(vector<int> eularianTour) {
+    int n = eularianTour.size(); 
+    vector<int> tsp; 
+    vector<int> visited(n, 0);
+    for (int i = 0; i < n; i++) { // Iterate through eularian tour. 
+      if (visited[eularianTour[i]] == 1) { 
+        continue; 
+      }
+      tsp.push_back(eularianTour[i]);
+      visited[eularianTour[i]] = 1;
+    }
+
+    cout << "GENERATED TSP: " << endl;
+
+    for (int i = 0; i < eularianTour.size(); i++) {
+      cout << " -> " << eularianTour[i]; 
+    }
+    
+
+    
+    return tsp;
 }
 
 int christofides(Graph g) {
@@ -121,6 +167,8 @@ int christofides(Graph g) {
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
+    vector<int> eulerianTour = eulerian_tour(g);
+    vector<int> tsp = tsp_tour(eulerianTour); 
 
     // Generate TSP tour from Eularian tour
     return 0;
