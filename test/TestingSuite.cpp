@@ -24,26 +24,26 @@ To write a test that utilizes a test fixture?
 Begin the test with the macro: TEST_F, instead of TEST. And the group for the test is the name of the test fixture.
 In this particular case: It is SetUpBigGraph. 
 */
-class SetUpBigGraph : public ::testing::Test {
-protected:
-    // Set up code (optional)
-    void SetUp() override {
-        // Initialize common resources or state
-    }
+// class SetUpBigGraph : public ::testing::Test {
+// protected:
+//     // Set up code (optional)
+//     void SetUp() override {
+//         // Initialize common resources or state
+//     }
 
-    // Tear down code (optional)
-    void TearDown() override {
-        // Release any resources or clean up
-    }
-};
+//     // Tear down code (optional)
+//     void TearDown() override {
+//         // Release any resources or clean up
+//     }
+// };
 
-/* 
-A test that utilizes test fixture SetUpBigGraph. 
-*/
+// /* 
+// A test that utilizes test fixture SetUpBigGraph. 
+// */
 
-TEST_F(SetUpBigGraph, testFixture1){
-    //ASSERT: very big graph etc.. 
-};
+// TEST_F(SetUpBigGraph, testFixture1){
+//     //ASSERT: very big graph etc.. 
+// };
 
 
 
@@ -57,60 +57,3 @@ Second Argument - the test’s name within the test suite.
 OBS - Don't use underscores for the names of tests.
 
 */
-
-TEST(TestingSuite, basicExampleOfATest)
-{
-    Graph g = Graph();
-
-    EXPECT_TRUE(true);
-}
-
-TEST(TestingSuite, basicExampleOfATest2)
-{
-
-    string filename = "../../test/testInputs/firsttest.txt";
-    // string filename = INPUT_DIR + "firsttest.txt";
-    Graph g = Graph(filename);
-    for(int i = 0; i < g.getN(); i++)
-    {
-        for(int j = 0; j < g.getN(); j++)
-        {
-            ASSERT_EQ(g.getWeight(i,j), g.getWeight(j,i));
-            ASSERT_EQ(g.getWeight(i,j), 1);
-        }
-    }
-}
-
-TEST(TestingSuite, minWeightPerfectMatchTest)
-{
-    string filename = string(INPUT_DIR) + "smallgraph.txt";
-    int numVertices;
-    Graph g = Graph(filename);
-
-    string solution = string(INPUT_DIR) + "smallgraphSolution.txt";
-    int numVerticesSolution;
-    Graph g2 = Graph(solution);
-
-    vector<int> S;
-    for (int i = 0; i < g.getN(); i++)
-    {
-        S.push_back(i);
-    }
-
-    const vector<vector<int>> adjacencyListBefore = g.getAdjacencyList();
-    minimum_weight_matching(g, S);
-    const vector<vector<int>> adjacencyListAfter = g.getAdjacencyList();
-    vector<vector<int>> adjacencyListMinWeightPerfectMatch;
-    const vector<vector<int>> solutionAdjacencyList = g2.getAdjacencyList();
-    // Make adjacencyListMinWeightPerfectMatch be the list of edges that is in adjacencyListAfter but not in adjacencyListBefore
-    for (int i = 0; i < adjacencyListAfter.size(); i++)
-    {
-        if (find(adjacencyListBefore.begin(), adjacencyListBefore.end(), adjacencyListAfter[i]) == adjacencyListBefore.end())
-        {
-            adjacencyListMinWeightPerfectMatch.push_back(adjacencyListAfter[i]);
-        }
-    }
-
-    ASSERT_EQ(adjacencyListMinWeightPerfectMatch, solutionAdjacencyList);
-
-}

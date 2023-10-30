@@ -4,6 +4,7 @@ using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
 int Graph::getWeight(int x, int y) { return weight[x][y]; }
+void Graph::setWeight(int x, int y, int w) { weight[x][y] = w; }
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
 {
