@@ -122,9 +122,11 @@ vector<int> eulerian_tour(Graph g) {
         for (int i = 0; i < neighbors.size(); i++) { // If we find node not visited, continue. 
           if (visited[neighbors[i]] == 0) { notFinished = 1; currentNode = neighbors[i]; break;}
         }
+      } else {
+        visited[currentNode] = 1; // Visit current node. 
+        eularianTour.push_back(currentNode);
       }
-      visited[currentNode] = 1; // Visit current node. 
-      eularianTour.push_back(currentNode);
+      
       
     }
     cout << "EULARIAN TOUR: " << endl; 
@@ -160,6 +162,12 @@ vector<int> tsp_tour(vector<int> eularianTour) {
 }
 
 int christofides(Graph &g) {
+
+    cout << "graph with in the beginning: "<< endl; 
+    g.printWeightMatrix();
+
+
+
     // Run prims algorithm to get neighbourlist
     prims(g);
     cout << "Adjacency list after prims: " << endl;
@@ -179,6 +187,8 @@ int christofides(Graph &g) {
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
+    cout << "Graphs weights before eularian tour: " << endl; 
+    g.printWeightMatrix(); 
     vector<int> eulerianTour = eulerian_tour(g);
     vector<int> tsp = tsp_tour(eulerianTour); 
 
