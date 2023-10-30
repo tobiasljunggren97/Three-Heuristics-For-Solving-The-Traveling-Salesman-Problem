@@ -19,7 +19,7 @@ public:
     Graph(string filename){ receiveInput(filename); };
 
     //Getters
-    int getWeight(int x, int y);
+    int getWeight(int i, int j);
     int getN();
     vector<int> getNeighbors(int node);
 

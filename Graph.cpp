@@ -3,7 +3,7 @@
 using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
-int Graph::getWeight(int x, int y) { return weight[x][y]; }
+int Graph::getWeight(int i, int j) { return weight[i][j]; }
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
 {
@@ -20,22 +20,17 @@ void Graph::addNeighbor(int node, int neighbor)
 // ONLY REMOVES ONE NEIGHBOR NODE IF THERE ARE DUPLICATE EDGES
 void Graph::removeNeighbor(int node, int neighbor)
 {
-    for (int i = 0; i < adjacencyList[node].size(); i++)
-    {
-        if (adjacencyList[node][i] == neighbor)
-        {
-            adjacencyList[node].erase(adjacencyList[node].begin() + i);
-            return;
-        }
+
+    auto it_node = std::find(adjacencyList[node].begin(), adjacencyList[node].end(), neighbor);
+    if (it_node != adjacencyList[node].end()) {
+        adjacencyList[node].erase(it_node); // Removes the element
     }
-    for (int i = 0; i < adjacencyList[neighbor].size(); i++)
-    {
-        if (adjacencyList[neighbor][i] == node)
-        {
-            adjacencyList[neighbor].erase(adjacencyList[neighbor].begin() + i);
-            return;
-        }
+
+    auto it_neighbor = std::find(adjacencyList[neighbor].begin(), adjacencyList[neighbor].end(), node);
+    if (it_neighbor != adjacencyList[neighbor].end()) {
+        adjacencyList[neighbor].erase(it_neighbor); // Removes the element
     }
+    
 }
 
 //----------------------- HELPER FUNCTIONS -----------------------//
