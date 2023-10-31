@@ -6,6 +6,7 @@ set(This TestingSuite)
 set(Sources 
     TestingSuite.cpp
     GraphClassTests.cpp
+    PrimsTest.cpp
 )
 
 add_executable(${This} ${Sources})

@@ -19,8 +19,8 @@ public:
     Graph(string filename){ receiveInput(filename); };
 
     //Getters
-    int getWeight(int i, int j);
-    int getN();
+    int getWeight(int i, int j) const;
+    int getN() const;
     vector<int> getNeighbors(int node);
 
     //Setters
