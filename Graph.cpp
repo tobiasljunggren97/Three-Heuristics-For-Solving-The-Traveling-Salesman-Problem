@@ -4,11 +4,15 @@ using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
 int Graph::getWeight(int i, int j) { return weight[i][j]; }
+void Graph::setWeight(int i, int j, int w) { weight[i][j] = w; }
+
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
 {
     return adjacencyList[node];
 }
+
+const vector<vector<int> >& Graph::getAdjacencyList() { return adjacencyList; }
 
 void Graph::setAdjancecyList(vector<vector<int>> adjList) { adjacencyList = adjList; }
 void Graph::addNeighbor(int node, int neighbor)
@@ -45,9 +49,9 @@ double calculateEuclidianDistance(const tuple<double, double> &p1, const tuple<d
 void Graph::receiveInput(string filename)
 {
     if (filename != "")
-    {   
-        //Redirect input from file to stdin
-        if(!freopen(filename.c_str(), "r", stdin))
+    {
+        // Redirect input from file to stdin
+        if (!freopen(filename.c_str(), "r", stdin))
         {
             cout << "ERROR: Filename not valid (Kom ihåg att redirecta från rätt mapp, så typ '../sampleInput1.txt')" << endl;
             exit(1);
@@ -89,4 +93,16 @@ void Graph::printAdjacencyList()
         }
         cout << endl;
     }
-}
+};
+
+// Print weight matrix
+void Graph::printWeightMatrix()
+{
+    for (int i = 1; i < N; i++)
+    {
+        for (int j = 0; j <= i - 1; j++)
+        {
+            cout << i << " -- " << weight[i][j] << " -- " << j << endl;
+        }
+    }
+};

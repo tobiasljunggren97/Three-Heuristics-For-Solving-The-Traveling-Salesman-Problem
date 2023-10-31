@@ -34,6 +34,7 @@ In this particular case: It is SetUpBigGraph.
 //         // Initialize common resources or state
 //         string filename = string(TEST_INPUT_DIR) + "setUpBigGraph.txt";
 //         g = Graph(filename);
+
 //     }
 
 //     // Tear down code (optional)
@@ -42,9 +43,9 @@ In this particular case: It is SetUpBigGraph.
 //     }
 // };
 
-/* 
-A test that utilizes test fixture SetUpBigGraph. 
-*/
+// /* 
+// A test that utilizes test fixture SetUpBigGraph. 
+// */
 
 // TEST_F(SetUpBigGraph, testFixture1){
 //     //ASSERT: very big graph etc.. 
@@ -62,3 +63,4 @@ Second Argument - the test’s name within the test suite.
 OBS - Don't use underscores for the names of tests.
 
 */
+

@@ -5,6 +5,7 @@ set(This TestingSuite)
 
 set(Sources 
     TestingSuite.cpp
+    MinWeightTests.cpp
     GraphClassTests.cpp
     PrimsTest.cpp
 )

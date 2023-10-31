@@ -16,12 +16,15 @@ private:
 public:
     //Constructors
     Graph(){ receiveInput(); };
+    Graph(int N) : N(N) { weight = vector<vector<double> >(N, vector<double>(N)); adjacencyList = vector<vector<int>>(N);}; // For testing
     Graph(string filename){ receiveInput(filename); };
 
     //Getters
     int getWeight(int i, int j) const;
-    int getN() const;
+    void setWeight(int i, int j, int w); // For testing
+    int getN();
     vector<int> getNeighbors(int node);
+    const vector<vector<int> >& getAdjacencyList(); // For testing
 
     //Setters
     void setAdjancecyList(vector<vector<int> > adjList);
@@ -30,6 +33,8 @@ public:
 
     //Helper functions
     void printAdjacencyList();
+
+    void printWeightMatrix();
 };
 
 

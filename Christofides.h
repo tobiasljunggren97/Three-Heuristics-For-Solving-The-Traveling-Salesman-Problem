@@ -7,4 +7,6 @@
 TSPSolution christofides(Graph &g);
 void prims(Graph &g);
 
+int minimum_weight_matching(Graph &graph, vector<int> &S);
+
 #endif
