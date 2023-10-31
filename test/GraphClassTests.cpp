@@ -3,7 +3,7 @@
 #include "../Graph.h"
 #include "../Christofides.h"
 using namespace std;
-#define TEST_INPUT_DIR "../../test/testInputs/"
+#define TEST_INPUT_DIR "../../test/graphClassInputs/"
 
 
 // ----------------------------- Graph.h / Graph.cpp TESTS ----------------------------- //
