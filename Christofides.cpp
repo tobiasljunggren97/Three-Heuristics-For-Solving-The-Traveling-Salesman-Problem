@@ -105,6 +105,9 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
     return 0;
 }
 
+
+/*Expected input: A graph object g whose adjacency list consists of an MST together with added edges from minweight perfect match. 
+And thus, all nodes should have an even degree. */
 vector<int> eulerian_tour(Graph g) {
 
     vector<int> eularianTour; 
@@ -120,7 +123,9 @@ vector<int> eulerian_tour(Graph g) {
       if (visited[currentNode]) { // we have visited this node before. 
         notFinished = 0; // Assume we are finished. 
         for (int i = 0; i < neighbors.size(); i++) { // If we find node not visited, continue. 
-          if (visited[neighbors[i]] == 0) { notFinished = 1; currentNode = neighbors[i]; break;}
+          if (visited[neighbors[i]] == 0) { 
+            cout << "what is neighbors[i] ?" << neighbors[i] << endl; 
+            notFinished = 1; currentNode = neighbors[i]; break;}
         }
       } else {
         visited[currentNode] = 1; // Visit current node. 
@@ -136,7 +141,7 @@ vector<int> eulerian_tour(Graph g) {
     
 
     return eularianTour;
-}
+} 
 
 vector<int> tsp_tour(vector<int> eularianTour) {
     int n = eularianTour.size(); 

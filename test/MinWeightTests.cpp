@@ -20,6 +20,8 @@ using namespace std;
 // };
 
 
+// TODO: Ett test som är bra att göra: Kolla så att alla noder har jämnt antal grannar.  
+
 TEST(MinWeightPerfectMatch, minWeightPerfectMatchTest)
 {
     string filename = string(INPUT_DIR) + "smallgraph.txt";

@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include <algorithm>
 
 using namespace std;
 
