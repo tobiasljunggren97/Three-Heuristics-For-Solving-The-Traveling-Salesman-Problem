@@ -36,12 +36,14 @@ protected:
                 break;
             }
             g.addNeighbor(node1, node2);
+            cout << "for node1: " << node1 << " and node2: " << node2 << ". we have weight: " << weight << endl; 
             g.setWeight(node1, node2, weight);
+            cout << "after setting weight, calling g.getWeight(node1, node2) and we get: " << g.getWeight(node1, node2);  
         }
 
         file.close();
-        cout << "current graph: " << endl;
-        g.printWeightMatrix();
+        // cout << "current graph: " << endl;
+        // g.printWeightMatrix();
     }
 
     // Tear down code (optional)
@@ -61,7 +63,9 @@ TEST_F(MediumGraph, EularianTourMediumGraphReturnsRightPath)
     int et2 = 1;
     int et3 = 1;
     int et4 = 1;
-    vector<int> eularian_res = eulerian_tour(g);
+    cout << "THIS IS INSIDE THE TEST, WHAT IS WEIGHT HERE BETWEEN NODE 1 AND 2? " << endl; 
+    cout << g.getWeight(0, 1) << endl; 
+    vector<int> eularian_res = eularian_tour(g);
 
     // since there can be several correct eulerian tours for minweidht solution graph.
     vector<int> c_et_v1 = {0, 8, 12, 11, 9, 11, 7, 10, 2, 4, 5, 6, 3, 6, 12, 1, 0};

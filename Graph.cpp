@@ -14,6 +14,7 @@ vector<int> Graph::getNeighbors(int node)
 }
 
 const vector<vector<int> >& Graph::getAdjacencyList() { return adjacencyList; }
+const vector<vector<double> >& Graph::getWeights() {return weight; }
 
 void Graph::setAdjancecyList(vector<vector<int>> adjList) { adjacencyList = adjList; }
 void Graph::addNeighbor(int node, int neighbor)

@@ -25,6 +25,7 @@ public:
     int getN();
     vector<int> getNeighbors(int node);
     const vector<vector<int> >& getAdjacencyList(); // For testing
+    const vector<vector<double> >& getWeights();
 
     //Setters
     void setAdjancecyList(vector<vector<int> > adjList);
