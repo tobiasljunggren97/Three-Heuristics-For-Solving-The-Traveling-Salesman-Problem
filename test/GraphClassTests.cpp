@@ -3,12 +3,12 @@
 #include "../Graph.h"
 #include "../Christofides.h"
 using namespace std;
-#define TEST_INPUT_DIR "../../test/testInputs/"
+#define TEST_INPUT_DIR "../../test/graphClassInputs/"
 
 
 // ----------------------------- Graph.h / Graph.cpp TESTS ----------------------------- //
 TEST(GraphClassTests, TestingGraphIsUndirected){
-    string filename = string(TEST_INPUT_DIR) + "kattisSampleGraph.txt";
+    string filename = TEST_INPUT_DIR "kattisSampleGraph.txt";
     Graph g = Graph(filename);
     for (int i = 0; i < g.getN(); i++) {
         for (int j = 0; j < g.getN(); j++) {
@@ -18,7 +18,7 @@ TEST(GraphClassTests, TestingGraphIsUndirected){
 };
 
 TEST(GraphClassTests, TestingRemovingNeighborInAdjList){
-    string filename = string(TEST_INPUT_DIR) + "kattisSampleGraph.txt";
+    string filename = TEST_INPUT_DIR "kattisSampleGraph.txt";
     Graph g = Graph(filename);
     g.addNeighbor(0 , 1);
     g.addNeighbor(0 , 2);
@@ -27,7 +27,7 @@ TEST(GraphClassTests, TestingRemovingNeighborInAdjList){
 };
 
 TEST(GraphClassTests, TestingRemovingNeighborWhenDuplicatesExistInAdjList){
-    string filename = string(TEST_INPUT_DIR) + "kattisSampleGraph.txt";
+    string filename = TEST_INPUT_DIR "kattisSampleGraph.txt";
     Graph g = Graph(filename);
     g.addNeighbor(0 , 1);
     g.addNeighbor(0 , 2);
@@ -40,7 +40,7 @@ TEST(GraphClassTests, TestingRemovingNeighborWhenDuplicatesExistInAdjList){
 };
 
 TEST(GraphClassTests, TestingAddingNeighbors){
-    string filename = string(TEST_INPUT_DIR) + "kattisSampleGraph.txt";
+    string filename = TEST_INPUT_DIR "kattisSampleGraph.txt";
     Graph g = Graph(filename);
     g.addNeighbor(0, 1);
     g.addNeighbor(0, 2);

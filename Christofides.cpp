@@ -7,6 +7,7 @@
 #include "Graph.h"
 #include "Christofides.h"
 #include <tuple>
+#include "TSPSolution.h"
 
 
 using namespace std;
@@ -155,19 +156,26 @@ vector<int> tsp_tour(vector<int> eularianTour) {
     for (int i = 0; i < eularianTour.size(); i++) {
       cout << " -> " << eularianTour[i]; 
     }
+    cout << endl;
     
 
     
     return tsp;
 }
 
-int christofides(Graph &g) {
 
+//TEMPORARY HELPER
+double calculateTourCost(vector<int> tsp_tour, Graph &g){
+  int cost = 0;
+  for(int i = 0; i < tsp_tour.size(); i++){
+    cost += g.getWeight(tsp_tour[i], tsp_tour[(i+1) % tsp_tour.size()]);
+  }
+  return cost;
+}
+
+TSPSolution christofides(Graph &g) {
     cout << "graph with in the beginning: "<< endl; 
     g.printWeightMatrix();
-
-
-
     // Run prims algorithm to get neighbourlist
     prims(g);
     cout << "Adjacency list after prims: " << endl;
@@ -190,71 +198,12 @@ int christofides(Graph &g) {
     cout << "Graphs weights before eularian tour: " << endl; 
     g.printWeightMatrix(); 
     vector<int> eulerianTour = eulerian_tour(g);
-    vector<int> tsp = tsp_tour(eulerianTour); 
-
     // Generate TSP tour from Eularian tour
-    return 0;
+    TSPSolution christofidesSolution(tsp_tour(eulerianTour));
+    christofidesSolution.cost = calculateTourCost(christofidesSolution.tour, g);
+    cout << "Cost of tour: " << christofidesSolution.cost << endl;
+    
+    return christofidesSolution;
 }
 
 
-// JUST A TEST
-// int main() {
-//     int N = 10;
-//     vector<double> inner_vector(N);
-//     vector<vector<double> > weight(N,inner_vector);
-//     cout << "HEJ"<< endl;
-//     weight[0][1] = 10;
-//     weight[0][2] = 4;
-//     weight[1][2] = 3;
-//     weight[1][5] = 2;
-//     weight[1][6] = 2;
-//     weight[2][3] = 1;
-//     weight[2][4] = 2;
-//     weight[3][4] = 5;
-//     weight[4][6] = 4;
-//     weight[4][7] = 1;
-//     weight[4][8] = 3;
-//     weight[5][6] = 1;
-//     weight[6][7] = 2;
-//     weight[7][8] = 3;
-//     weight[7][9] = 2;
-//     weight[8][9] = 1;
-//     cout << "HEJ"<< endl;
-//     vector<vector<int> > adjacencyList(N);
-//     adjacencyList[0].push_back(1);
-//     adjacencyList[0].push_back(2);
-//     adjacencyList[1].push_back(0);
-//     adjacencyList[1].push_back(2);
-//     adjacencyList[1].push_back(5);
-//     adjacencyList[1].push_back(6);
-//     adjacencyList[2].push_back(0);
-//     adjacencyList[2].push_back(1);
-//     adjacencyList[2].push_back(3);
-//     adjacencyList[2].push_back(4);
-//     adjacencyList[3].push_back(2);
-//     adjacencyList[3].push_back(4);
-//     adjacencyList[4].push_back(2);
-//     adjacencyList[4].push_back(3);
-//     adjacencyList[4].push_back(6);
-//     adjacencyList[4].push_back(7);
-//     adjacencyList[4].push_back(8);
-//     adjacencyList[5].push_back(1);
-//     adjacencyList[5].push_back(6);
-//     adjacencyList[6].push_back(1);
-//     adjacencyList[6].push_back(4);
-//     adjacencyList[6].push_back(5);
-//     adjacencyList[6].push_back(7);
-//     adjacencyList[7].push_back(4);
-//     adjacencyList[7].push_back(6);
-//     adjacencyList[7].push_back(8);
-//     adjacencyList[7].push_back(9);
-//     adjacencyList[8].push_back(4);
-//     adjacencyList[8].push_back(7);
-//     adjacencyList[8].push_back(9);
-//     adjacencyList[9].push_back(7);
-//     adjacencyList[9].push_back(8);
-//     cout << "HEJ"<< endl;
-//     minimum_weight_matching(adjacencyList, weight, N, 16);
-
-//     return 0;
-// }

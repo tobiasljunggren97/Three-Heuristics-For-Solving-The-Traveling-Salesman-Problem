@@ -3,7 +3,7 @@
 using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
-int Graph::getWeight(int i, int j) { return weight[i][j]; }
+int Graph::getWeight(int i, int j) const { return weight[i][j]; }
 void Graph::setWeight(int i, int j, int w) { weight[i][j] = w; }
 
 int Graph::getN() { return N; }
