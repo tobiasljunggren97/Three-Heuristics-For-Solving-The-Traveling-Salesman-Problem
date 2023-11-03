@@ -61,7 +61,7 @@ pair<GraphC, vector<double> > ReadWeightedGraph(Graph &graph, vector<int> &S) {
             }
         }
     } catch (const char* msg) {
-        cout << msg << endl;
+        // cout << msg << endl;
     }
 
     return make_pair(G, cost);
@@ -94,13 +94,13 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
 	list<int> matching = solution.first;
 	double obj = solution.second;
 
-	cout << "Optimal matching cost: " << obj << endl;
-	cout << "Edges in the matching:" << endl;
+	// cout << "Optimal matching cost: " << obj << endl;
+	// cout << "Edges in the matching:" << endl;
 	for(list<int>::iterator it = matching.begin(); it != matching.end(); it++)
 	{
 		pair<int, int> e = G.GetEdge( *it );
 
-		cout << S[e.first] << " " << S[e.second] << endl;
+		// cout << S[e.first] << " " << S[e.second] << endl;
     graph.addNeighbor(S[e.first], S[e.second]);
 	}
     return 0;
@@ -130,56 +130,60 @@ vector<int> eulerian_tour(Graph g) {
       
       
     }
-    cout << "EULARIAN TOUR: " << endl; 
-    for (int i = 0; i < eularianTour.size(); i++) {
-      cout << " -> " << eularianTour[i]; 
-    }
+    // cout << "EULARIAN TOUR: " << endl; 
+    // for (int i = 0; i < eularianTour.size(); i++) {
+    //   cout << " -> " << eularianTour[i]; 
+    // }
     
 
     return eularianTour;
 }
 
-vector<int> tsp_tour(vector<int> eularianTour) {
+TSPSolution tsp_tour(vector<int> eularianTour, Graph &g) {
     int n = eularianTour.size(); 
-    vector<int> tsp; 
+    TSPSolution tspSolution = TSPSolution(n);
     vector<int> visited(n, 0);
+    int count = 0;
     for (int i = 0; i < n; i++) { // Iterate through eularian tour. 
       if (visited[eularianTour[i]] == 1) { 
         continue; 
       }
-      tsp.push_back(eularianTour[i]);
+      tspSolution.tour[count] = eularianTour[i];
+      count++;
+      tspSolution.cost += g.getWeight(eularianTour[i], eularianTour[(i+1) % n]);
       visited[eularianTour[i]] = 1;
     }
 
-    cout << "GENERATED TSP: " << endl;
+    //Now printed in main
+    // cout << "GENERATED TSP: " << endl;
 
-    for (int i = 0; i < eularianTour.size(); i++) {
-      cout << " -> " << eularianTour[i]; 
-    }
-    cout << endl;
+    // for (int i = 0; i < eularianTour.size(); i++) {
+    //   cout << " -> " << tspSolution.tour[i]; 
+    // }
+    // cout << endl;
     
 
     
-    return tsp;
+    return tspSolution;
 }
 
 
 //TEMPORARY HELPER
-double calculateTourCost(vector<int> tsp_tour, Graph &g){
-  int cost = 0;
-  for(int i = 0; i < tsp_tour.size(); i++){
-    cost += g.getWeight(tsp_tour[i], tsp_tour[(i+1) % tsp_tour.size()]);
-  }
-  return cost;
-}
+// double calculateTourCost(vector<int> tsp_tour, Graph &g){
+//   int cost = 0;
+//   for(int i = 0; i < tsp_tour.size(); i++){
+//     cost += g.getWeight(tsp_tour[i], tsp_tour[(i+1) % tsp_tour.size()]);
+//   }
+//   return cost;
+// }
 
 TSPSolution christofides(Graph &g) {
-    cout << "graph with in the beginning: "<< endl; 
-    g.printWeightMatrix();
+    // cout << "graph with in the beginning: "<< endl; 
+    // g.printWeightMatrix();
     // Run prims algorithm to get neighbourlist
     prims(g);
-    cout << "Adjacency list after prims: " << endl;
-    g.printAdjacencyList();
+    // cout << "Adjacency list after prims: " << endl;
+    // g.printAdjacencyList();
     // Create S = { i : len(neightbours(i)) % 2 != 0 }
     vector<int> S;
     for(int i = 0; i < g.getN(); i++){
@@ -190,18 +194,17 @@ TSPSolution christofides(Graph &g) {
     }
     // Find minimum weight matching M in S
     minimum_weight_matching(g, S);
-    cout << "Adjacency list after matching: " << endl;
-    g.printAdjacencyList();
+    // cout << "Adjacency list after matching: " << endl;
+    // g.printAdjacencyList();
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
-    cout << "Graphs weights before eularian tour: " << endl; 
-    g.printWeightMatrix(); 
+    // cout << "Graphs weights before eularian tour: " << endl; 
+    // g.printWeightMatrix(); 
     vector<int> eulerianTour = eulerian_tour(g);
     // Generate TSP tour from Eularian tour
-    TSPSolution christofidesSolution(tsp_tour(eulerianTour));
-    christofidesSolution.cost = calculateTourCost(christofidesSolution.tour, g);
-    cout << "Cost of tour: " << christofidesSolution.cost << endl;
+    TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
+    // cout << "Cost of tour: " << christofidesSolution.cost << endl;
     
     return christofidesSolution;
 }
