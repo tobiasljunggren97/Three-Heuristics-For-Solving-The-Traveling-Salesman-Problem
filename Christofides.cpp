@@ -12,6 +12,38 @@
 
 using namespace std;
 
+void prims2(Graph &g) {
+  int numVertices = g.getN();
+  int currentVertex = 0;
+  vector<int> inMST(numVertices);
+  inMST[currentVertex] = 1;
+  vector<int> edgesToHandle = g.getNeighbors(currentVertex);
+  int count = 0;
+
+  while (count < numVertices) {
+    int minWeightEdge = numeric_limits<int>::max();
+    int minWeightNode = 0;
+    int weight;
+    for (int i = 0; i < edgesToHandle.size(); i++) {
+      weight = g.getWeight(currentVertex, edgesToHandle[i]);
+      if (weight < minWeightEdge) {
+        minWeightNode = edgesToHandle[i];
+        minWeightEdge = weight;
+      }
+    }
+    inMST[minWeightNode] = 1;
+    g.addNeighbor(currentVertex, minWeightNode);
+    vector<int> minWeightNodeNeighbours = g.getNeighbors(minWeightNode);
+    for (int node = 0; node < minWeightNodeNeighbours.size(); node ++) {
+      if (!inMST[minWeightNodeNeighbours[node]]) {
+        edgesToHandle.push_back(minWeightNodeNeighbours[node]);
+      }
+    }
+    edgesToHandle.erase(edgesToHandle.begin()+minWeightNode);
+  }
+
+}
+
 void prims(Graph &g){
   int numPoints = g.getN();
   int numEdges = 0;  
