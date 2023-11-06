@@ -11,7 +11,7 @@ class Graph {
 private: 
     int N;  
     vector<vector<double> > weight;
-    vector<vector<int> > adjacencyList;
+    vector<vector<int> > adjacencyList; 
     void receiveInput(string filename = "");
 public:
     //Constructors
@@ -26,6 +26,7 @@ public:
     vector<int> getNeighbors(int node);
     const vector<vector<int> >& getAdjacencyList(); // For testing
     const vector<vector<double> >& getWeights();
+    void addNeighborOneWay(int node, int neighbor); // For testing 
 
     //Setters
     void setAdjancecyList(vector<vector<int> > adjList);

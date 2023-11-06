@@ -105,46 +105,57 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
     return 0;
 }
 
+int setup_edges(Graph &g, vector<vector<int>> &edges) {
+  cout << "OKAY SOMETHING FISHY IS GOING ON IN ADJACENCY LIST, LET'S FIND OUT WHAT >: (" << endl; 
+  cout << "what is adjacency-list now?? " << endl; 
+  g.printAdjacencyList(); 
+  int edgesLeft = 0; 
+  vector<vector<int>>  adj_lst = g.getAdjacencyList(); 
+  edges = vector<vector<int>>(g.getN());
+  for (int i = 0; i < adj_lst.size(); i++)
+  {
+    edges[i] = vector<int>(g.getN()); 
+    for (int j = 0; j < adj_lst[i].size(); j++)
+    {
+      edges[i][adj_lst[i][j]] = 1; 
+      edgesLeft = edgesLeft + 1; 
+      cout << i << " -- " << adj_lst[i][j] << " has edge " << endl; 
+    }
+    
+  }
+  return edgesLeft;
+}
 
 
 vector<int> eularian_tour(Graph &g) {
-  Graph gt = g; 
-  vector<vector<int>> adj_lst = gt.getAdjacencyList(); 
-  vector<vector<int>> edges_left = adj_lst; 
-  int totalNrEdges = 0; 
-  for (int i = 0; i < edges_left.size(); i++)
-  {
-    totalNrEdges = totalNrEdges + edges_left[i].size(); 
-  }
+  vector<vector<int>> edges; 
+  int totalNrEdges = setup_edges(g, edges); 
+  // cout << "what is size of edges after setup ?? "  << edges.size() << endl; 
 
   vector<int> eularian_tour; 
   int notFinished = 1; 
   int currentNode = 0; 
   vector<int> neighbors; 
-  //eularian_tour.push_back(0); 
+  eularian_tour.push_back(0); 
   while(notFinished) 
   {
 
 keep_going: 
-    neighbors = g.getNeighbors(currentNode); 
-    cout << "what is size of neighbors ? " << neighbors.size() << endl;
-    cout << "What is current node? " << currentNode << endl; 
-    for (int i = 0; i < neighbors.size(); i++)
-    {
-      cout << "neighbor nr " << i << ":  " << neighbors[i] << endl; 
-    }
-     
-    for (int i = 0; i < neighbors.size(); i++)
+    for (int i = 0; i < g.getN(); i++)
     {  
-      cout << "what is weight for gt.getWeight(currentNode, neighbors[i]) between " << currentNode << " and " << neighbors[i] << " ? " << gt.getWeight(currentNode, neighbors[i]) << endl; 
-      cout << "VS" << endl; 
-      cout << "what is weight for g.getWeight(currentNode, neighbors[i]) between " << currentNode << " and " << neighbors[i] << " ? " << g.getWeight(currentNode, neighbors[i]) << endl; 
-      if (gt.getWeight(currentNode, neighbors[i]) > 0) {
-          cout << "OMG WE FOUND AN EDGE: " << currentNode << "  --- " << neighbors[i] << endl; 
-          eularian_tour.push_back(currentNode); 
-          gt.setWeight(currentNode, neighbors[i], -1);
+      if (edges[currentNode][i] > 0) { // there is an unused edge between current node and the neighbor we are looking at. 
+          eularian_tour.push_back(i); 
+          edges[currentNode][i] = 0;
           totalNrEdges--; 
-          currentNode = neighbors[i]; 
+          currentNode = i; 
+          goto keep_going; 
+      }
+      else if (edges[i][currentNode] > 0) { // there is an unused edge between current node and the neighbor we are looking at. 
+
+          eularian_tour.push_back(i); 
+          edges[i][currentNode] = 0;
+          totalNrEdges--; 
+          currentNode = i; 
           goto keep_going; 
       }
 
@@ -157,13 +168,81 @@ keep_going:
       notFinished = 0; 
     }
   }
-      cout << "EULARIAN TOUR: " << endl; 
-    for (int i = 0; i < eularian_tour.size(); i++) {
-      cout << " -> " << eularian_tour[i]; 
-    }
+    // cout << "EULARIAN TOUR: " << endl; 
+    // for (int i = 0; i < eularian_tour.size(); i++) {
+    //   cout << " -> " << eularian_tour[i]; 
+    // }
 
   return eularian_tour; 
 }
+
+
+
+
+// vector<int> eularian_tour(Graph &g) {
+//   vector<vector<int>> edges; 
+//   setup_edges(g, edges); 
+
+//   Graph gt = g; 
+//   vector<vector<int>> adj_lst = gt.getAdjacencyList(); 
+//   vector<vector<int>> edges_left = adj_lst; 
+
+//   cout << "INSIDE CRISTOFIDES EULARIAN TOUR!! WHAT DOES GT.MATRIX LOOK LIKE? " << endl; 
+//   gt.printWeightMatrix();
+//   int totalNrEdges = 0; 
+//   for (int i = 0; i < edges_left.size(); i++)
+//   {
+//     totalNrEdges = totalNrEdges + edges_left[i].size(); 
+//   }
+
+//   vector<int> eularian_tour; 
+//   int notFinished = 1; 
+//   int currentNode = 0; 
+//   vector<int> neighbors; 
+//   //eularian_tour.push_back(0); 
+//   while(notFinished) 
+//   {
+
+// keep_going: 
+//     neighbors = g.getNeighbors(currentNode); 
+//     // cout << "what is size of neighbors ? " << neighbors.size() << endl;
+//     // cout << "What is current node? " << currentNode << endl; 
+//     // for (int i = 0; i < neighbors.size(); i++)
+//     // {
+//     //   cout << "neighbor nr " << i << ":  " << neighbors[i] << endl; 
+//     // }
+//     cout << "WHILE LOOP, WHAT DOES MATRIX LOOK LIKE?" << endl; 
+//     gt.printWeightMatrix(); 
+//     for (int i = 0; i < neighbors.size(); i++)
+//     {  
+//       // cout << "what is weight for gt.getWeight(currentNode, neighbors[i]) between " << currentNode << " and " << neighbors[i] << " ? " << gt.getWeight(currentNode, neighbors[i]) << endl; 
+//       // cout << "VS" << endl; 
+//       // cout << "what is weight for g.getWeight(currentNode, neighbors[i]) between " << currentNode << " and " << neighbors[i] << " ? " << g.getWeight(currentNode, neighbors[i]) << endl; 
+//       if (gt.getWeight(currentNode, neighbors[i]) > 0) {
+//           cout << "OMG WE FOUND AN EDGE: " << currentNode << "  --- " << neighbors[i] << endl; 
+//           eularian_tour.push_back(currentNode); 
+//           gt.setWeight(currentNode, neighbors[i], -1);
+//           totalNrEdges--; 
+//           currentNode = neighbors[i]; 
+//           goto keep_going; 
+//       }
+
+//     }    
+//     if (totalNrEdges > 0) {
+//       cerr << "could not find path from node: " << currentNode << " to any of its neighbors, but there exist paths we haven't crossed yet." << endl; 
+//       break; 
+//     }
+//     else if (totalNrEdges == 0) {
+//       notFinished = 0; 
+//     }
+//   }
+//     cout << "EULARIAN TOUR: " << endl; 
+//     for (int i = 0; i < eularian_tour.size(); i++) {
+//       cout << " -> " << eularian_tour[i]; 
+//     }
+
+//   return eularian_tour; 
+// }
 
 
 
@@ -398,8 +477,7 @@ keep_going:
 
 
 
-
-vector<int> tsp_tour(vector<int> eularianTour) {
+vector<int> tsp_tour(vector<int> &eularianTour) {
     int n = eularianTour.size(); 
     vector<int> tsp; 
     vector<int> visited(n, 0);
@@ -410,22 +488,22 @@ vector<int> tsp_tour(vector<int> eularianTour) {
       tsp.push_back(eularianTour[i]);
       visited[eularianTour[i]] = 1;
     }
+    cout << "what is last element in eulerian tour? " << eularianTour[n-1] << endl; 
+    tsp.push_back(eularianTour[n-1]);
 
     cout << "GENERATED TSP: " << endl;
 
-    for (int i = 0; i < eularianTour.size(); i++) {
-      cout << " -> " << eularianTour[i]; 
+    for (int i = 0; i < tsp.size(); i++) {
+      cout << " -> " << tsp[i]; 
     }
-    
-
     
     return tsp;
 }
 
 int christofides(Graph &g) {
 
-    cout << "graph with in the beginning: "<< endl; 
-    g.printWeightMatrix();
+    // cout << "graph with in the beginning: "<< endl; 
+    // g.printWeightMatrix();
 
 
 

@@ -5,7 +5,7 @@ using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
 int Graph::getWeight(int i, int j) { return weight[i][j]; }
-void Graph::setWeight(int i, int j, int w) { weight[i][j] = w; }
+void Graph::setWeight(int i, int j, int w) { weight[i][j] = w;}
 
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
@@ -21,6 +21,10 @@ void Graph::addNeighbor(int node, int neighbor)
 {
     adjacencyList[node].push_back(neighbor);
     adjacencyList[neighbor].push_back(node);
+}
+
+void Graph::addNeighborOneWay(int node, int neighbor) { // for testing. 
+    adjacencyList[node].push_back(neighbor);
 }
 
 // ONLY REMOVES ONE NEIGHBOR NODE IF THERE ARE DUPLICATE EDGES
@@ -100,9 +104,9 @@ void Graph::printAdjacencyList()
 // Print weight matrix
 void Graph::printWeightMatrix()
 {
-    for (int i = 1; i < N; i++)
+    for (int i = 0; i < N; i++)
     {
-        for (int j = 0; j <= i - 1; j++)
+        for (int j = 0; j < N; j++)
         {
             cout << i << " -- " << weight[i][j] << " -- " << j << endl;
         }
