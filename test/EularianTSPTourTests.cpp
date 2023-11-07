@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "../main.h"
+#include "../TSPSolution.h"
 #include "../Christofides.h"
 using namespace std;
 #define INPUT_DIR "../../test/tourInputs/"
@@ -92,7 +93,7 @@ TEST_F(MediumGraph, TSPTourMediumGraphReturnsRightPath)
     int et4 = 1;
 
     vector<int> eularian_res = eulerian_tour(*g);
-    vector<int> tspTour = tsp_tour(eularian_res);
+    TSPSolution tspTour = tsp_tour(eularian_res, *g);
 
     vector<int> c_et_v1 = {0, 8, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 1, 0};
     vector<int> c_et_v2 = {0, 8, 12, 6, 3, 5, 4, 2, 10, 7, 11, 9, 1, 0};
@@ -104,10 +105,10 @@ TEST_F(MediumGraph, TSPTourMediumGraphReturnsRightPath)
 
     for (int i = 0; i < c_et_v1.size(); i++)
     {
-        et1 = c_et_v1[i] == tspTour[i] && et1 == 1 ? 1 : 0;
-        et2 = c_et_v2[i] == tspTour[i] && et2 == 1 ? 1 : 0;
-        et3 = c_et_v3[i] == tspTour[i] && et3 == 1 ? 1 : 0;
-        et4 = c_et_v4[i] == tspTour[i] && et4 == 1 ? 1 : 0;
+        et1 = c_et_v1[i] == tspTour.tour[i] && et1 == 1 ? 1 : 0;
+        et2 = c_et_v2[i] == tspTour.tour[i] && et2 == 1 ? 1 : 0;
+        et3 = c_et_v3[i] == tspTour.tour[i] && et3 == 1 ? 1 : 0;
+        et4 = c_et_v4[i] == tspTour.tour[i] && et4 == 1 ? 1 : 0;
     }
 
     EXPECT_EQ(1, et1 || et2 || et3 || et4); // at most one will be correct.
