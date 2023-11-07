@@ -13,73 +13,50 @@
 
 using namespace std;
 
-void prims2(Graph &g) {
+void prims(Graph &g) {
+  
   int numVertices = g.getN();
   int currentVertex = 0;
   vector<int> inMST(numVertices);
   inMST[currentVertex] = 1;
-  vector<int> edgesToHandle = g.getNeighbors(currentVertex);
-  int count = 0;
+  vector<pair<int, int> > edgesToHandle;
+
+  for (int i = 1; i < numVertices; i++) {
+    edgesToHandle.push_back(make_pair(currentVertex, i));
+  } 
+  
+  int count = 1;
 
   while (count < numVertices) {
     int minWeightEdge = numeric_limits<int>::max();
+    int minWeightEdgeIndex = 0;
     int minWeightNode = 0;
-    int weight;
+    int weight = 0;
     for (int i = 0; i < edgesToHandle.size(); i++) {
-      weight = g.getWeight(currentVertex, edgesToHandle[i]);
-      if (weight < minWeightEdge) {
-        minWeightNode = edgesToHandle[i];
+      if (i != currentVertex) {
+      weight = g.getWeight(edgesToHandle[i].first, edgesToHandle[i].second);
+      if (weight < minWeightEdge && !(inMST[edgesToHandle[i].first] && inMST[edgesToHandle[i].second])) {
+        currentVertex = edgesToHandle[i].first;
+        minWeightNode = edgesToHandle[i].second;
+        minWeightEdgeIndex = i;
         minWeightEdge = weight;
+      }
       }
     }
     inMST[minWeightNode] = 1;
+    count++;
     g.addNeighbor(currentVertex, minWeightNode);
-    vector<int> minWeightNodeNeighbours = g.getNeighbors(minWeightNode);
-    for (int node = 0; node < minWeightNodeNeighbours.size(); node ++) {
-      if (!inMST[minWeightNodeNeighbours[node]]) {
-        edgesToHandle.push_back(minWeightNodeNeighbours[node]);
+    for (int node = 0; node < numVertices; node++) {
+      if (!(inMST[node] && inMST[node]) && node != minWeightNode) {
+        edgesToHandle.push_back(make_pair(minWeightNode, node));
       }
     }
-    edgesToHandle.erase(edgesToHandle.begin()+minWeightNode);
+    edgesToHandle.erase(edgesToHandle.begin()+minWeightEdgeIndex);
+    cout << endl;
   }
 
 }
 
-void prims(Graph &g){
-  int numPoints = g.getN();
-  int numEdges = 0;  
-  vector<int> handled(numPoints);
-  handled[0] = true;
-  // vector<vector<int> > adjacencyList(numPoints);
-
-  int node1;  
-  int node2;  
-
-  while (numEdges < numPoints - 1) {
-
-    int min = numeric_limits<int>::max();
-    node1 = 0;
-    node2 = 0;
-
-    for (int i = 0; i < numPoints; i++) {
-      if (handled[i]) {
-        for (int j = 0; j < numPoints; j++) {
-          if (!handled[j] && g.getWeight(i,j)) {  // not in selected and there is an edge
-            if (min > g.getWeight(i,j) && i != j) {
-              min = g.getWeight(i,j);
-              node1 = i;
-              node2 = j;
-            }
-          }
-        }
-      }
-    }
-    
-    g.addNeighbor(node1, node2);
-    handled[node2] = true;
-    numEdges++;
-  } 
-}
 
 pair<GraphC, vector<double> > ReadWeightedGraph(Graph &graph, vector<int> &S) {
     int numVertices = S.size();
