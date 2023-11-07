@@ -8,6 +8,7 @@ set(Sources
     MinWeightTests.cpp
     GraphClassTests.cpp
     EularianTSPTourTests.cpp
+    PrimsTest.cpp
 )
 
 add_executable(${This} ${Sources})

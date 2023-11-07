@@ -7,6 +7,7 @@ using namespace std;
 int Graph::getWeight(int i, int j) { return weight[i][j]; }
 void Graph::setWeight(int i, int j, int w) { weight[i][j] = w;}
 
+
 int Graph::getN() { return N; }
 vector<int> Graph::getNeighbors(int node)
 {

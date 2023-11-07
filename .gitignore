@@ -8,3 +8,7 @@ tsp
 /buildMac
 /buildWin
 /buildVendela
+CTestTestfile.cmake
+/googletest/googletest/generated/
+/lib
+libTSPAVALG.a

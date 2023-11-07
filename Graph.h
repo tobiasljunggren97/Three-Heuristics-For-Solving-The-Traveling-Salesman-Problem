@@ -27,6 +27,7 @@ public:
 
     // Getters
     int getWeight(int i, int j);
+
     void setWeight(int i, int j, int w); // For testing
     int getN();
     vector<int> getNeighbors(int node);
