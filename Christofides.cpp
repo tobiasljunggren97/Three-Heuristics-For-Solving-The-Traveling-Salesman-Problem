@@ -9,6 +9,7 @@
 #include <tuple>
 #include "TSPSolution.h"
 
+#define DEBUG 0
 
 using namespace std;
 
@@ -138,40 +139,37 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
     return 0;
 }
 
-vector<int> eulerian_tour(Graph g) {
-
-    vector<int> eularianTour; 
-    int n = g.getN();
-    vector<int> visited(n, 0);
-    // visited[0] = 1; // Start by visiting first node. 
-    int notFinished = 1; 
+vector<int> eulerian_tour(Graph &g) {
+    Graph gc = g;  // Copy graph object.
+    vector<vector<int>> edges = g.getAdjacencyList();
+    stack<int> currentPath;
+    vector<int> finalPath;
     int currentNode = 0; 
-    while(notFinished) {
-
-      vector<int> neighbors = g.getNeighbors(currentNode);
-
-      if (visited[currentNode]) { // we have visited this node before. 
-        notFinished = 0; // Assume we are finished. 
-        for (int i = 0; i < neighbors.size(); i++) { // If we find node not visited, continue. 
-          if (visited[neighbors[i]] == 0) { notFinished = 1; currentNode = neighbors[i]; break;}
-        }
-      } else {
-        visited[currentNode] = 1; // Visit current node. 
-        eularianTour.push_back(currentNode);
-      }
-      
-      
-    }
-    // cout << "EULARIAN TOUR: " << endl; 
-    // for (int i = 0; i < eularianTour.size(); i++) {
-    //   cout << " -> " << eularianTour[i]; 
-    // }
     
 
-    return eularianTour;
+    currentPath.push(currentNode);  // Push the starting node onto the stack.
+    while (!currentPath.empty()) {
+        vector<int> neighbors = gc.getNeighbors(currentNode);
+        if (!neighbors.empty()) {
+            int nextNode = neighbors[0];  // Choose an unvisited neighbor.
+            currentPath.push(nextNode);  // Push the neighbor onto the stack.
+            gc.removeNeighbor(currentNode, nextNode);  // Mark the edge as visited.
+            currentNode = nextNode;  // Update the current node.
+        } else {
+            currentNode = currentPath.top();
+            currentPath.pop();
+            finalPath.push_back(currentNode);
+        }
+    }
+
+    // If there are unvisited edges, no Eulerian tour exists.
+
+    return finalPath;
 }
 
-TSPSolution tsp_tour(vector<int> eularianTour, Graph &g) {
+
+TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g) {
+
     int n = eularianTour.size(); 
     TSPSolution tspSolution = TSPSolution(n);
     vector<int> visited(n, 0);
@@ -185,6 +183,7 @@ TSPSolution tsp_tour(vector<int> eularianTour, Graph &g) {
       tspSolution.cost += g.getWeight(eularianTour[i], eularianTour[(i+1) % n]);
       visited[eularianTour[i]] = 1;
     }
+    tsp.push_back(eularianTour[n-1]);
 
     //Now printed in main
     // cout << "GENERATED TSP: " << endl;
@@ -198,7 +197,6 @@ TSPSolution tsp_tour(vector<int> eularianTour, Graph &g) {
     
     return tspSolution;
 }
-
 
 //TEMPORARY HELPER
 // double calculateTourCost(vector<int> tsp_tour, Graph &g){

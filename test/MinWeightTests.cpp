@@ -37,6 +37,7 @@ INSTANTIATE_TEST_SUITE_P(MinWeightPerfectMatchTests, MinWeightPerfectMatch, ::te
     FilePair(string(INPUT_DIR) + string("largeGraph.txt"), string(INPUT_DIR) + string("largeGraphSolution.txt"))
 ));
 
+
 TEST_P(MinWeightPerfectMatch, minWeightPerfectMatchTest)
 {
     string filename = file_path;

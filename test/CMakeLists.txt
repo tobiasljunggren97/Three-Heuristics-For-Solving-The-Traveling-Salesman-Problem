@@ -7,6 +7,7 @@ set(Sources
     TestingSuite.cpp
     MinWeightTests.cpp
     GraphClassTests.cpp
+    EularianTSPTourTests.cpp
     PrimsTest.cpp
 )
 
@@ -21,5 +22,8 @@ add_test(
     NAME ${This}
     COMMAND ${This}
 )
+
+
+#set_tests_properties(${This} PROPERTIES ENVIRONMENT "GTEST_FILTER=EularianTour*")
 
 

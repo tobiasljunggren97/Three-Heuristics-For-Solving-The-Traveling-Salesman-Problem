@@ -6,6 +6,8 @@
 #include "main.h"
 #include "TSPSolution.h"
 
+#include <fstream>
+
 using namespace std;
 
 void printSolution(TSPSolution &solution, Graph &g)
