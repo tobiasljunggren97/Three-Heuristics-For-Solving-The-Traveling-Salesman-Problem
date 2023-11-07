@@ -7,8 +7,7 @@ int christofides(Graph &g);
 
 int minimum_weight_matching(Graph &graph, vector<int> &S);
 
-vector<int> eularian_tour(Graph &g);
-vector<int> eulerian_tour_new(Graph &g); 
+vector<int> eulerian_tour(Graph &g); 
 
 vector<int> tsp_tour(vector<int> &eulerian_tour);
 
