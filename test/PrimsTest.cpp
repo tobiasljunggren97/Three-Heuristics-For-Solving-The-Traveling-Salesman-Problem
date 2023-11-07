@@ -27,13 +27,22 @@ TEST(PrimsTest, TestFindOnePossibleMST){
     while (file >> node1 >> node2 >> weight) {
         g.setWeight(node1, node2, weight);
         g.setWeight(node2, node1, weight);
-        expected[node1].push_back(node2);
-        expected[node2].push_back(node1);
+        if (weight == 1) {
+            expected[node1].push_back(node2);
+            expected[node2].push_back(node1);
+        }
     }
     file.close();
-    prims(g);    
+    prims(g);
     for(int i = 0; i < 6; i++){
         if(g.getNeighbors(i).size() != expected[i].size()){
+            for (int i = 0; i < g.getNeighbors(i).size(); i++) {
+                cout << g.getNeighbors(i)[i] << endl;
+            }
+            cout << "and" << endl;
+            for (int i = 0; i < expected[i].size(); i++) {
+                cout << expected[i][i] << endl;
+            }
             FAIL();
         }
         //sort vectors
