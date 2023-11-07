@@ -35,7 +35,8 @@ protected:
             {
                 break;
             }
-            g->addNeighborOneWay(node1, node2);
+            // g->addNeighborOneWay(node1, node2);
+            g->addNeighbor(node1, node2);
             g->setWeight(node1, node2, weight);
         }
 
@@ -60,7 +61,7 @@ TEST_F(MediumGraph, EularianTourMediumGraphReturnsRightPath)
     int et3 = 1;
     int et4 = 1;
 
-    vector<int> eularian_res = eularian_tour(*g);
+    vector<int> eularian_res = eulerian_tour_new(*g);
 
     // since there can be several correct eulerian tours for minweidht solution graph.
     vector<int> c_et_v1 = {0, 8, 12, 11, 9, 11, 7, 10, 2, 4, 5, 6, 3, 6, 12, 1, 0};
@@ -90,7 +91,7 @@ TEST_F(MediumGraph, TSPTourMediumGraphReturnsRightPath)
     int et3 = 1;
     int et4 = 1;
 
-    vector<int> eularian_res = eularian_tour(*g);
+    vector<int> eularian_res = eulerian_tour_new(*g);
     vector<int> tspTour = tsp_tour(eularian_res);
 
     vector<int> c_et_v1 = {0, 8, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 1, 0};
