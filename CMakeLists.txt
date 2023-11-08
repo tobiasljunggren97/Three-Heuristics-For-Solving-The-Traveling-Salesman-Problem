@@ -19,6 +19,7 @@ set(Headers
     GraphChristofides.h
     MatchingChristofides.h
     Graph.h
+    Stopwatch.h
 )
 
 set(Sources
@@ -28,6 +29,7 @@ set(Sources
     MatchingChristofides.cpp
     Graph.cpp
     main.cpp
+    Stopwatch.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
@@ -42,4 +44,5 @@ add_executable(
     BinaryHeapChristofides.cpp
     GraphChristofides.cpp
     MatchingChristofides.cpp
+    Stopwatch.cpp
 )

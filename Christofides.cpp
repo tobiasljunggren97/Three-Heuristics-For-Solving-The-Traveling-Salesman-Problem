@@ -1,13 +1,5 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <iomanip>
-#include "GraphChristofides.h"
-#include "MatchingChristofides.h"
-#include "Graph.h"
 #include "Christofides.h"
-#include <tuple>
-#include "TSPSolution.h"
+
 
 #define DEBUG 0
 
@@ -177,27 +169,34 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g) {
 // }
 
 TSPSolution christofides(Graph &g) {
-    // g.printWeightMatrix();
+    Stopwatch stopwatch = Stopwatch();
+    stopwatch.start("Prims");
     // Run prims algorithm to get neighbourlist
     prims(g);
-    // g.printAdjacencyList();
+    stopwatch.stop();
     // Create S = { i : len(neightbours(i)) % 2 != 0 }
+    stopwatch.start("Create S");
     vector<int> S;
     for(int i = 0; i < g.getN(); i++){
         if(g.getNeighbors(i).size() % 2 != 0){
             S.push_back(i);
         }
     }
+    stopwatch.stop();
     // Find minimum weight matching M in S
+    stopwatch.start("Minimum weight matching");
     minimum_weight_matching(g, S);
-    // g.printAdjacencyList();
+    stopwatch.stop();
     // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
     // Generate Eularian tour from multigraph with duplicate edges
-    // g.printWeightMatrix(); 
+    stopwatch.start("Eulerian tour");
     vector<int> eulerianTour = eulerian_tour(g);
+    stopwatch.stop();
     // Generate TSP tour from Eularian tour
+    stopwatch.start("TSP tour");
     TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
+    stopwatch.stop();
     
     return christofidesSolution;
 }
