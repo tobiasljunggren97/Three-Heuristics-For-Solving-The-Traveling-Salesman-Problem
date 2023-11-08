@@ -5,6 +5,7 @@
 #include <tuple>
 #include "main.h"
 #include "TSPSolution.h"
+#include "Stopwatch.h"
 
 #include <fstream>
 
@@ -21,8 +22,13 @@ void printSolution(TSPSolution &solution, Graph &g)
 
 int main() {
     //Initializing Graph will read input and create weight matrix
+    Stopwatch stopwatch = Stopwatch();
+    stopwatch.start("Graph initialization");
     Graph g = Graph();
+    stopwatch.stop();
+    stopwatch.start("Christofides in total");
     TSPSolution christofidesSolution = christofides(g);  
+    stopwatch.stop();
     printSolution(christofidesSolution, g);
     return 0;
 }

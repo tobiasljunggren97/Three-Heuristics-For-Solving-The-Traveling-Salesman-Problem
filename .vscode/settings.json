@@ -75,7 +75,8 @@
         "span": "cpp",
         "stack": "cpp",
         "unordered_set": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "numbers": "cpp"
     },
     "cmake.configureOnOpen": false
 }
