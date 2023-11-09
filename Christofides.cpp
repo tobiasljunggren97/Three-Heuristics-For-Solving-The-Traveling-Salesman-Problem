@@ -150,11 +150,10 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g) {
   
 
     //Now printed in main
-
-    // for (int i = 0; i < eularianTour.size(); i++) {
-    // }
-    
-
+    cout << "TSP TOUR: " << endl;
+    for (int i = 0; i < tspSolution.tour.size(); i++) {
+      cout << tspSolution.tour[i] << " -> "; 
+    }
     
     return tspSolution;
 }

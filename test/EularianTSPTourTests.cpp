@@ -95,13 +95,13 @@ TEST_F(MediumGraph, TSPTourMediumGraphReturnsRightPath)
     vector<int> eularian_res = eulerian_tour(*g);
     TSPSolution tspTour = tsp_tour(eularian_res, *g);
 
-    vector<int> c_et_v1 = {0, 8, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 1, 0};
-    vector<int> c_et_v2 = {0, 8, 12, 6, 3, 5, 4, 2, 10, 7, 11, 9, 1, 0};
+    vector<int> c_et_v1 = {0, 8, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 1};
+    vector<int> c_et_v2 = {0, 8, 12, 6, 3, 5, 4, 2, 10, 7, 11, 9, 1};
 
     // et_v1 reversed
-    vector<int> c_et_v3 = {0, 1, 12, 6, 3, 5, 4, 2, 10, 7, 11, 9, 8, 0};
+    vector<int> c_et_v3 = {0, 1, 12, 6, 3, 5, 4, 2, 10, 7, 11, 9, 8};
     // et_v2 reversed
-    vector<int> c_et_v4 = {0, 1, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 8, 0};
+    vector<int> c_et_v4 = {0, 1, 12, 11, 9, 7, 10, 2, 4, 5, 6, 3, 8};
 
     for (int i = 0; i < c_et_v1.size(); i++)
     {

@@ -4,7 +4,10 @@
 using namespace std;
 
 //----------------------- GETTERS AND SETTERS --------------------//
-int Graph::getWeight(int i, int j) { return weight[i][j]; }
+int Graph::getWeight(int i, int j) { 
+    return weight[i][j]; 
+    
+    }
 void Graph::setWeight(int i, int j, int w) { weight[i][j] = w;}
 
 
@@ -68,23 +71,36 @@ void Graph::receiveInput(string filename)
     cin >> N;
     // Initiate adjancency list
     adjacencyList = vector<vector<int>>(N);
-    vector<tuple<double, double>> ponts(N);
+    vector<tuple<double, double>> points(N);
     // Initiera 2d array
     weight = vector<vector<double>>(N, vector<double>(N));
-    double point1, point2;
+    
+    double x, y;
     for (int i = 0; i < N; ++i)
     {
-        cin >> point1 >> point2;
-        ponts[i] = make_tuple(point1, point2);
-    }
-    for (int i = 0; i < N; ++i)
-    {
-        for (int j = i + 1; j < N; ++j)
-        {
-            double distance = calculateEuclidianDistance(ponts[i], ponts[j]);
+        cin >> x >> y;
+        points[i] = make_tuple(x, y);
+        // for every node already added: 
+        // calc distance n^2
+        // vector<int> shortestEdgeTo(N);
+        // int min = 0; 
+        for (int j = 0; j < i; j++) {
+            if(i == j) {
+                weight[i][j] = 0;
+                weight[j][i] = 0;
+                continue; // skip if same node
+            }
+            
+            
+            double distance = calculateEuclidianDistance(points[i], points[j]);
+            // if (distance < weight[i][min]) {
+            //     min = j; 
+            // }
             weight[i][j] = distance;
             weight[j][i] = distance;
+            
         }
+        // shortestEdgeTo[i] = min;
     }
 };
 
