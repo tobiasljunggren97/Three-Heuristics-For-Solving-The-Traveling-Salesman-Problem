@@ -68,14 +68,16 @@ pair<GraphC, vector<double> > ReadWeightedGraph(Graph &graph, vector<int> &S) {
 }
 
 int minimum_weight_matching(Graph &graph, vector<int> &S) {
+  Stopwatch stopwatch = Stopwatch();
 
   // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
   GraphC G;
 	vector<double> cost;
 	
 	//Read the graph
+  stopwatch.start("ReadWeightedGraph");
 	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
-    
+  stopwatch.stop();
 	//pair< GraphC, vector<double> > p = CreateRandomGraph();
 	G = p.first;
 	cost = p.second;
@@ -85,25 +87,33 @@ int minimum_weight_matching(Graph &graph, vector<int> &S) {
 	// 	pair<int, int> e = G.GetEdge(i);
 	// }
 	//Create a Matching instance passing the graph
+  stopwatch.start("Matching M(G)");
 	Matching M(G);
+  stopwatch.stop();
 
 	//Pass the costs to solve the problem
+  stopwatch.start("SolveMinimumCostPerfectMatching");
 	pair< list<int>, double > solution = M.SolveMinimumCostPerfectMatching(cost);
+  stopwatch.stop();
 
+  stopwatch.start("line 100");
 	list<int> matching = solution.first;
 	double obj = solution.second;
+  stopwatch.stop();
 
+  stopwatch.start("Copying result to our graph");
 	for(list<int>::iterator it = matching.begin(); it != matching.end(); it++)
 	{
 		pair<int, int> e = G.GetEdge( *it );
 
     graph.addNeighbor(S[e.first], S[e.second]);
 	}
+  stopwatch.stop();
     return 0;
 }
 
 vector<int> eulerian_tour(Graph &g) {
-    Graph gc = g;  // Copy graph object.
+    // Graph g = g;  // Copy graph object.
     vector<vector<int>> edges = g.getAdjacencyList();
     stack<int> currentPath;
     vector<int> finalPath;
@@ -112,11 +122,11 @@ vector<int> eulerian_tour(Graph &g) {
 
     currentPath.push(currentNode);  // Push the starting node onto the stack.
     while (!currentPath.empty()) {
-        vector<int> neighbors = gc.getNeighbors(currentNode);
+        vector<int> neighbors = g.getNeighbors(currentNode);
         if (!neighbors.empty()) {
             int nextNode = neighbors[0];  // Choose an unvisited neighbor.
             currentPath.push(nextNode);  // Push the neighbor onto the stack.
-            gc.removeNeighbor(currentNode, nextNode);  // Mark the edge as visited.
+            g.removeNeighbor(currentNode, nextNode);  // Mark the edge as visited.
             currentNode = nextNode;  // Update the current node.
         } else {
             currentNode = currentPath.top();
@@ -149,10 +159,13 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g) {
     }
   
 
-    //Now printed in main
-    cout << "TSP TOUR: " << endl;
-    for (int i = 0; i < tspSolution.tour.size(); i++) {
-      cout << tspSolution.tour[i] << " -> "; 
+    if (DEBUG) {
+  //Now printed in main
+      cout << "TSP TOUR: " << endl;
+      for (int i = 0; i < tspSolution.tour.size(); i++) {
+        cout << tspSolution.tour[i] << " -> "; 
+      }
+      
     }
     
     return tspSolution;
