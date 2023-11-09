@@ -17,11 +17,7 @@ private:
     std::chrono::time_point<std::chrono::system_clock> startTime, endTime;
     string name;
 public:
-    Stopwatch(){
-        startTime = std::chrono::system_clock::now();
-        endTime = std::chrono::system_clock::now();
-        name = "";
-    };
+    Stopwatch(){};
     void start(string name);
     void stop();
 };
