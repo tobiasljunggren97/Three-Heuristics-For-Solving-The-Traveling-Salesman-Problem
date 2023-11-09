@@ -20,6 +20,8 @@ set(Headers
     MatchingChristofides.h
     Graph.h
     Stopwatch.h
+    hungarian.h
+    LocalImprovements.h
 )
 
 set(Sources
@@ -30,6 +32,8 @@ set(Sources
     Graph.cpp
     main.cpp
     Stopwatch.cpp
+    hungarian.cpp
+    LocalImprovements.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
@@ -45,4 +49,6 @@ add_executable(
     GraphChristofides.cpp
     MatchingChristofides.cpp
     Stopwatch.cpp
+    hungarian.cpp
+    LocalImprovements.cpp
 )
