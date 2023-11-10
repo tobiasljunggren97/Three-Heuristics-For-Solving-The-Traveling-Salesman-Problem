@@ -44,6 +44,7 @@ public:
     void printAdjacencyList();
 
     void printWeightMatrix();
+
 };
 
 #endif

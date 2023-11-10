@@ -13,6 +13,8 @@
 #include "Stopwatch.h"
 
 // Only list signatures of the functions that main.cpp needs to call
+TSPSolution nearestNeighbor(Graph &g, int startNode);
+
 TSPSolution greedy(Graph &g);
 
 
