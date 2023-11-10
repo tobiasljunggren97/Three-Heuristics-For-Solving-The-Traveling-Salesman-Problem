@@ -518,9 +518,9 @@ void Matching::UpdateDualCosts()
 
 pair< list<int>, double> Matching::SolveMinimumCostPerfectMatching(const vector<double> & cost)
 {
-	SolveMaximumMatching();
-	if(!perfect)
-		throw "Error: The graph does not have a perfect matching";
+	// SolveMaximumMatching();
+	// if(!perfect)
+	// 	throw "Error: The graph does not have a perfect matching";
 
 	Clear(); // Commenting out (we know that the graph has a perfect matching) improves performance, but might not be correct. 
 

@@ -7,6 +7,7 @@
 
 #include "TSPSolution.h"
 #include "Graph.h"
-TSPSolution twoOpt (TSPSolution solution, const Graph &graph);
+#include <algorithm>
+TSPSolution twoOpt (TSPSolution solution, Graph &graph);
 
 #endif // LOCALIMPROVEMENTS_H

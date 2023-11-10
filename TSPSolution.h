@@ -1,6 +1,7 @@
 #ifndef TSPSOLUTION_H
 #define TSPSOLUTION_H
-
+#include <vector>
+using namespace std; 
 struct TSPSolution {
     vector<int> tour;
     double cost;
