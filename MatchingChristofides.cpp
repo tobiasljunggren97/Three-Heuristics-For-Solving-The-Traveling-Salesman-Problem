@@ -522,7 +522,7 @@ pair< list<int>, double> Matching::SolveMinimumCostPerfectMatching(const vector<
 	// if(!perfect)
 	// 	throw "Error: The graph does not have a perfect matching";
 
-	Clear();
+	Clear(); // Commenting out (we know that the graph has a perfect matching) improves performance, but might not be correct. 
 
 	//Initialize slacks (reduced costs for the edges)
 	slack = cost;

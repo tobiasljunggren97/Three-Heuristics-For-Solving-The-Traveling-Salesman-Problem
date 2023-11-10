@@ -7,20 +7,59 @@
 
 using namespace std;
 
-void prims(Graph &g)
-{
+void prims(Graph &g) {
+  Stopwatch stopwatch = Stopwatch();
+  int numVertices = g.getN();
+  vector<int> inMST(numVertices);
+  vector<int> toCheck = {0};
+  inMST[0] = 1;
+  stopwatch.start("First edgesToHandle");
 
+  stopwatch.stop();
+  int count = 1;
+
+  while (count < numVertices) {
+    int minWeightEdge = numeric_limits<int>::max();
+    int minWeightNode = 0;
+    int weight = 0;
+    int neighbour = 0;
+    if (count == 1) {
+      stopwatch.start("First iteration");
+    }
+    for (int i = 0; i < toCheck.size(); i++) {
+      for (int j = toCheck[i]+1; j < numVertices; j++) {
+        weight = g.getWeight(toCheck[i], j);
+        if (weight < minWeightEdge && !inMST[j]) {
+          minWeightNode = j;
+          minWeightEdge = weight;
+          neighbour = toCheck[i];
+        }
+      }
+    }
+    inMST[minWeightNode] = 1;
+    toCheck.push_back(minWeightNode);
+    g.addNeighbor(neighbour, minWeightNode);
+    count++;
+    // cout << "Min edge " << neighbour << ", " << minWeightNode << " at weight " << weight << endl;
+    if (count == 1) {
+      stopwatch.stop();
+    }
+  }
+}
+
+void primss(Graph &g) {
+  Stopwatch stopwatch = Stopwatch();
   int numVertices = g.getN();
   int currentVertex = 0;
   vector<int> inMST(numVertices);
   inMST[currentVertex] = 1;
-  vector<pair<int, int>> edgesToHandle;
 
-  for (int i = 1; i < numVertices; i++)
-  {
+  vector<pair<int, int> > edgesToHandle;
+  stopwatch.start("First edgesToHandle");
+  for (int i = 1; i < numVertices; i++) {
     edgesToHandle.push_back(make_pair(currentVertex, i));
-  }
-
+  } 
+  stopwatch.stop();
   int count = 1;
 
   while (count < numVertices)
@@ -29,19 +68,23 @@ void prims(Graph &g)
     int minWeightEdgeIndex = 0;
     int minWeightNode = 0;
     int weight = 0;
-    for (int i = 0; i < edgesToHandle.size(); i++)
-    {
-      if (i != currentVertex)
-      {
-        weight = g.getWeight(edgesToHandle[i].first, edgesToHandle[i].second);
-        if (weight < minWeightEdge && !(inMST[edgesToHandle[i].first] && inMST[edgesToHandle[i].second]))
-        {
-          currentVertex = edgesToHandle[i].first;
-          minWeightNode = edgesToHandle[i].second;
-          minWeightEdgeIndex = i;
-          minWeightEdge = weight;
-        }
+
+    if (count == 1) {
+      stopwatch.start("First iteration");
+    }
+    for (int i = 0; i < edgesToHandle.size(); i++) {
+      if (i != currentVertex) {
+      weight = g.getWeight(edgesToHandle[i].first, edgesToHandle[i].second);
+      if (weight < minWeightEdge && !(inMST[edgesToHandle[i].first] && inMST[edgesToHandle[i].second])) {
+        currentVertex = edgesToHandle[i].first;
+        minWeightNode = edgesToHandle[i].second;
+        minWeightEdgeIndex = i;
+        minWeightEdge = weight;
       }
+      }
+    }
+    if (count == 1) {
+      stopwatch.stop();
     }
     inMST[minWeightNode] = 1;
     count++;
@@ -163,7 +206,46 @@ vector<int> eulerian_tour(Graph &g)
     }
   }
 
-  return eulerianTour;
+int minimum_weight_matching(Graph &graph, vector<int> &S) {
+
+  // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
+  GraphC G;
+	vector<double> cost;
+	Stopwatch stopwatch = Stopwatch();
+  stopwatch.start("ReadWeightedGraph");
+	//Read the graph
+	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
+  stopwatch.stop();
+    
+	//pair< GraphC, vector<double> > p = CreateRandomGraph();
+	G = p.first;
+	cost = p.second;
+  
+  // for (int i = 0; i < G.GetNumEdges(); i++)
+	// {
+	// 	pair<int, int> e = G.GetEdge(i);
+	// }
+	//Create a Matching instance passing the graph
+  stopwatch.start("Matching(G)");
+	Matching M(G);
+  stopwatch.stop();
+
+	//Pass the costs to solve the problem
+  stopwatch.start("SolveMinimumCostPerfectMatching");
+	pair< list<int>, double > solution = M.SolveMinimumCostPerfectMatching(cost);
+  stopwatch.stop();
+
+	list<int> matching = solution.first;
+	double obj = solution.second;
+  stopwatch.start("Add edges to graph");
+	for(list<int>::iterator it = matching.begin(); it != matching.end(); it++)
+	{
+		pair<int, int> e = G.GetEdge( *it );
+
+    graph.addNeighbor(S[e.first], S[e.second]);
+	}
+  stopwatch.stop();
+    return 0;
 }
 
 TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g)
