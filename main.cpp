@@ -28,8 +28,12 @@ int main() {
     stopwatch.stop();
     stopwatch.start("Christofides in total");
     TSPSolution christofidesSolution = christofides(g);  
+    TSPSolution greedySolution = greedy(g);
     stopwatch.stop();
     printSolution(christofidesSolution, g);
+    printSolution(greedySolution, g);
+    // cout << "Christers kostnad " << christofidesSolution.cost << endl;
+    // cout << "Gregers kostnad " << greedySolution.cost << endl;
     return 0;
 }
 
