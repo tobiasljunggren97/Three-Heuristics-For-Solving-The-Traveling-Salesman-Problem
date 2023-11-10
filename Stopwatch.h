@@ -7,8 +7,6 @@
 #include <ctime>
 #include <iomanip>
 #include <limits>
-#include <numbers>
-
 using namespace std;
 
 class Stopwatch
