@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void prims(Graph &g) {
+void primss(Graph &g) {
   Stopwatch stopwatch = Stopwatch();
   int numVertices = g.getN();
   vector<int> inMST(numVertices);
@@ -47,7 +47,7 @@ void prims(Graph &g) {
   }
 }
 
-void primss(Graph &g) {
+void prims(Graph &g) {
   Stopwatch stopwatch = Stopwatch();
   int numVertices = g.getN();
   int currentVertex = 0;
