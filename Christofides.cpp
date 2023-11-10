@@ -206,47 +206,50 @@ vector<int> eulerian_tour(Graph &g)
     }
   }
 
-int minimum_weight_matching(Graph &graph, vector<int> &S) {
-
-  // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
-  GraphC G;
-	vector<double> cost;
-	Stopwatch stopwatch = Stopwatch();
-  stopwatch.start("ReadWeightedGraph");
-	//Read the graph
-	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
-  stopwatch.stop();
-    
-	//pair< GraphC, vector<double> > p = CreateRandomGraph();
-	G = p.first;
-	cost = p.second;
-  
-  // for (int i = 0; i < G.GetNumEdges(); i++)
-	// {
-	// 	pair<int, int> e = G.GetEdge(i);
-	// }
-	//Create a Matching instance passing the graph
-  stopwatch.start("Matching(G)");
-	Matching M(G);
-  stopwatch.stop();
-
-	//Pass the costs to solve the problem
-  stopwatch.start("SolveMinimumCostPerfectMatching");
-	pair< list<int>, double > solution = M.SolveMinimumCostPerfectMatching(cost);
-  stopwatch.stop();
-
-	list<int> matching = solution.first;
-	double obj = solution.second;
-  stopwatch.start("Add edges to graph");
-	for(list<int>::iterator it = matching.begin(); it != matching.end(); it++)
-	{
-		pair<int, int> e = G.GetEdge( *it );
-
-    graph.addNeighbor(S[e.first], S[e.second]);
-	}
-  stopwatch.stop();
-    return 0;
+  return eulerianTour;
 }
+
+// int minimum_weight_matching(Graph &graph, vector<int> &S) {
+
+//   // OBS Example Min-Weight Matching from https://github.com/dilsonpereira/Minimum-Cost-Perfect-Matching/blob/master/Graph.h
+//   GraphC G;
+// 	vector<double> cost;
+// 	Stopwatch stopwatch = Stopwatch();
+//   stopwatch.start("ReadWeightedGraph");
+// 	//Read the graph
+// 	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
+//   stopwatch.stop();
+    
+// 	//pair< GraphC, vector<double> > p = CreateRandomGraph();
+// 	G = p.first;
+// 	cost = p.second;
+  
+//   // for (int i = 0; i < G.GetNumEdges(); i++)
+// 	// {
+// 	// 	pair<int, int> e = G.GetEdge(i);
+// 	// }
+// 	//Create a Matching instance passing the graph
+//   stopwatch.start("Matching(G)");
+// 	Matching M(G);
+//   stopwatch.stop();
+
+// 	//Pass the costs to solve the problem
+//   stopwatch.start("SolveMinimumCostPerfectMatching");
+// 	pair< list<int>, double > solution = M.SolveMinimumCostPerfectMatching(cost);
+//   stopwatch.stop();
+
+// 	list<int> matching = solution.first;
+// 	double obj = solution.second;
+//   stopwatch.start("Add edges to graph");
+// 	for(list<int>::iterator it = matching.begin(); it != matching.end(); it++)
+// 	{
+// 		pair<int, int> e = G.GetEdge( *it );
+
+//     graph.addNeighbor(S[e.first], S[e.second]);
+// 	}
+//   stopwatch.stop();
+//     return 0;
+// }
 
 TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g)
 {
