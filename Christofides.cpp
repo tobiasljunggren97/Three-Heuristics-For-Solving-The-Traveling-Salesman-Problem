@@ -208,22 +208,10 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g)
 //    return cost;
 //  }
 
-TSPSolution christofides(Graph &g)
-{
-  Stopwatch stopwatch = Stopwatch();
-  stopwatch.start("Prims");
-  // Run prims algorithm to get neighbourlist
-  prims(g);
-  stopwatch.stop();
-  // Create S = { i : len(neightbours(i)) % 2 != 0 }
-
+void hungarian(Graph &g){
   vector<WeightedBipartiteEdge> allEdges;
   vector<int> right;
   vector<int> left;
-
-  stopwatch.start("Minimum weight matching");
-
-  // vector<int> S;
   int count = 0;
   for (int i = 0; i < g.getN(); i++)
   {
@@ -252,28 +240,23 @@ TSPSolution christofides(Graph &g)
     }
   }
 
-  // cout << "size of allEdges : " << allEdges.size() << endl;
   vector<int> hungarianMatch = hungarianMinimumWeightPerfectMatching(right.size(), allEdges);
-
-  // cout << "***************************************    LEFT: " << endl;
-  // for (int i = 0; i < left.size(); i++)
-  // {
-  //   cout << left[i] << endl;
-  // }
-
-  // cout << "***************************************    RIGHT: " << endl;
-  // for (int i = 0; i < right.size(); i++)
-  // {
-  //   cout << right[i] << endl;
-  // }
-
-  // cout << "***************************************    HUNGARIAN: " << endl;
   for (int i = 0; i < hungarianMatch.size(); i++)
   {
-    // cout << " left node " << left[i] << " should be matched to " << right[hungarianMatch[i]] << "with cost: " << g.getWeight(left[i], right[hungarianMatch[i]]) << endl;
     g.addNeighbor(left[i], right[hungarianMatch[i]]);
   }
+}
 
+TSPSolution christofides(Graph &g)
+{
+  Stopwatch stopwatch = Stopwatch();
+  stopwatch.start("Prims");
+  // Run prims algorithm to get neighbourlist
+  prims(g);
+  stopwatch.stop();
+  // Create S = { i : len(neightbours(i)) % 2 != 0 }
+  stopwatch.start("Hungarian");
+  hungarian(g);
   stopwatch.stop();
   // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
