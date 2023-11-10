@@ -23,17 +23,21 @@ void printSolution(TSPSolution &solution, Graph &g)
 int main() {
     //Initializing Graph will read input and create weight matrix
     Stopwatch stopwatch = Stopwatch();
-    stopwatch.start("Graph initialization");
     Graph g = Graph();
-    stopwatch.stop();
-    stopwatch.start("Christofides in total");
-    TSPSolution christofidesSolution = christofides(g);  
-    TSPSolution greedySolution = greedy(g);
-    stopwatch.stop();
-    printSolution(christofidesSolution, g);
-    printSolution(greedySolution, g);
-    // cout << "Christers kostnad " << christofidesSolution.cost << endl;
-    // cout << "Gregers kostnad " << greedySolution.cost << endl;
+    TSPSolution solution1 = nearestNeighbor(g, 0);
+    TSPSolution solution2 = nearestNeighbor(g, g.getN() / 2);
+    TSPSolution solution3 = nearestNeighbor(g, g.getN() - 1);
+    
+    if(solution1.cost < solution2.cost && solution1.cost < solution3.cost) {
+        printSolution(solution1, g);
+    } else if(solution2.cost < solution1.cost && solution2.cost < solution3.cost) {
+        printSolution(solution2, g);
+    } else {
+        printSolution(solution3, g);
+    }
+
+    
+
     return 0;
 }
 

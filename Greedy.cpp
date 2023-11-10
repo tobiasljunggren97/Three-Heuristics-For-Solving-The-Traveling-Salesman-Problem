@@ -1,14 +1,16 @@
 #include "Greedy.h"
 #include "LocalImprovements.h"
 
-TSPSolution greedy(Graph &g) {
+TSPSolution nearestNeighbor(Graph &g, int startNode) {
     int numVertices = g.getN();
-    int currentVertex = 0;
+    if(startNode < 0 || startNode >= numVertices) {
+        throw "Invalid start node";
+    }
+    int currentVertex = startNode;
     TSPSolution tspSolution = TSPSolution(numVertices);
     tspSolution.tour[0] = currentVertex;
     vector<int> visited(numVertices);
-    visited[currentVertex] = 0;
-    visited[0] = 1;
+    visited[currentVertex] = 1;
     int counter = 1;
     const vector<int> weights;
 
@@ -35,10 +37,8 @@ TSPSolution greedy(Graph &g) {
         currentVertex = minWeightNode;
         counter++;
     }
-    tspSolution.cost += g.getWeight(currentVertex, 0);
+    tspSolution.cost += g.getWeight(currentVertex, startNode);
     TSPSolution localImpr = twoOpt(tspSolution, g);
     return localImpr;
 }
-
-
 
