@@ -29,7 +29,7 @@ int main() {
     stopwatch.start("Christofides in total");
     TSPSolution christofidesSolution = christofides(g);  
     stopwatch.stop();
-    printSolution(christofidesSolution, g);
+    // printSolution(christofidesSolution, g);
     return 0;
 }
 

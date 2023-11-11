@@ -353,7 +353,18 @@ TSPSolution christofides(Graph &g)
   stopwatch.start("TSP tour");
   TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
   stopwatch.stop();
-  TSPSolution localImpr = twoOpt(christofidesSolution, g);
+
+  stopwatch.start("Simmulated Annealing with Two opt"); 
+  TSPSolution localImpr = simmulated_annealing_with_twoOpt(christofidesSolution, g); 
+  stopwatch.stop(); 
+
+  cout << "cost with simmulated annealing: " << localImpr.cost << endl; 
+  cout << "cost before regular two opt: " << christofidesSolution.cost << endl; 
+  TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
+
+  cout << "cost with two opt only: " << twoOptSol.cost << endl; 
+
+
 
   return localImpr;
 }
