@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <tuple>
 #include "main.h"
+#include <algorithm>
 #include "TSPSolution.h"
 #include "Stopwatch.h"
 
@@ -25,7 +26,7 @@ void generateRandomVector(vector<int> &randomVector, int size, int min, int max)
     for(int i = 0; i < size; i++)
     {
         int random = rand() % max + min;
-        while(find(randomVector.begin(), randomVector.end(), random) != randomVector.end())
+        while(std::find(randomVector.begin(), randomVector.end(), random) != randomVector.end())
         {
             random = rand() % max + min;
         }
@@ -47,9 +48,12 @@ int main() {
 
     // New vector a of size 10
 
+    int size = 25 > g.getN() ? g.getN() : 25;
+
     vector<int> randomVector;
-    generateRandomVector(randomVector, g.getN(), 0, g.getN());
-    for (int i = 0; i < g.getN(); i++) {
+
+    generateRandomVector(randomVector, size, 0, g.getN());
+    for (int i = 0; i < size; i++) {
         solution = nearestNeighbor(g, randomVector[i]);
         if (solution.cost < bestSolution.cost) {
             bestSolution = solution;
