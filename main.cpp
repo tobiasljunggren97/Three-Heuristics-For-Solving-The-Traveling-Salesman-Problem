@@ -34,19 +34,39 @@ void generateRandomVector(vector<int> &randomVector, int size, int min, int max)
     }
 }
 
+
+TSPSolution checkEdgeCase(Graph &g){
+    int n = g.getN();
+    if(n == 2){
+        TSPSolution solution;
+        solution.tour = vector<int>(n);
+        solution.cost = 0;
+        solution.tour[0] = 0;
+        solution.tour[1] = 1;
+        solution.cost = g.getWeight(0, 1);
+        return solution;
+    } else {
+        TSPSolution solution;
+        solution.tour = vector<int>(n);
+        solution.cost = 0;
+        solution.tour[0] = 0;
+        return solution;
+    }
+}
+
 int main() {
     //Initializing Graph will read input and create weight matrix
-    Stopwatch stopwatch = Stopwatch();
+    //Stopwatch stopwatch = Stopwatch();
     Graph g = Graph();
-    // TSPSolution solution1 = nearestNeighbor(g, 0);
-    // TSPSolution solution2 = nearestNeighbor(g, g.getN() / 2);
-    // TSPSolution solution3 = nearestNeighbor(g, g.getN() - 1);
-    
+    //EDGE CASE, < 3 NODES
+    if(g.getN() < 3){
+        TSPSolution solution = checkEdgeCase(g);
+        printSolution(solution, g);
+        return 0;
+    }
     TSPSolution solution;
-    TSPSolution bestSolution;
-    bestSolution.cost = numeric_limits<int>::max();
-
-    // New vector a of size 10
+    TSPSolution bestNNSolution;
+    bestNNSolution.cost = numeric_limits<int>::max();
 
     int size = 25 > g.getN() ? g.getN() : 25;
 
@@ -55,22 +75,18 @@ int main() {
     generateRandomVector(randomVector, size, 0, g.getN());
     for (int i = 0; i < size; i++) {
         solution = nearestNeighbor(g, randomVector[i]);
-        if (solution.cost < bestSolution.cost) {
-            bestSolution = solution;
+        if (solution.cost < bestNNSolution.cost) {
+            bestNNSolution = solution;
         }
     }
-    printSolution(bestSolution, g);
-    // if(solution1.cost < solution2.cost && solution1.cost < solution3.cost) {
-    //     printSolution(solution1, g);
-    // } else if(solution2.cost < solution1.cost && solution2.cost < solution3.cost) {
-    //     printSolution(solution2, g);
-    // } else {
-    //     printSolution(solution3, g);
-    // }
-
-    
+    TSPSolution greedySolution;
+    greedySolution = greedy(g);
+    if (greedySolution.cost < bestNNSolution.cost) {
+        printSolution(greedySolution, g);
+    } else {
+        printSolution(bestNNSolution, g);
+    }
 
     return 0;
 }
-
 
