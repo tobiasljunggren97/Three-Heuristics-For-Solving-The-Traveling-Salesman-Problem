@@ -68,8 +68,6 @@ int main() {
     TSPSolution bestNNSolution;
     bestNNSolution.cost = numeric_limits<int>::max();
 
-    // New vector a of size 10
-
     int size = 25 > g.getN() ? g.getN() : 25;
 
     vector<int> randomVector;
