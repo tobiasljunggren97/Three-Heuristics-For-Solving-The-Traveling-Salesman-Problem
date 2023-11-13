@@ -14,26 +14,28 @@ add_subdirectory(googletest)
 
 set(Headers
     Christofides.h
-    BinaryHeapChristofides.h
-    GlobalsChristofides.h
-    GraphChristofides.h
-    MatchingChristofides.h
+    # BinaryHeapChristofides.h
+    # GlobalsChristofides.h
+    # GraphChristofides.h
+    # MatchingChristofides.h
     Graph.h
     Stopwatch.h
     hungarian.h
     LocalImprovements.h
+    Greedy.h
 )
 
 set(Sources
     Christofides.cpp
-    BinaryHeapChristofides.cpp
-    GraphChristofides.cpp
-    MatchingChristofides.cpp
+    # BinaryHeapChristofides.cpp
+    # GraphChristofides.cpp
+    # MatchingChristofides.cpp
     Graph.cpp
     main.cpp
     Stopwatch.cpp
     hungarian.cpp
     LocalImprovements.cpp
+    Greedy.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
@@ -45,10 +47,11 @@ add_executable(
     main.cpp
     Graph.cpp
     Christofides.cpp
-    BinaryHeapChristofides.cpp
-    GraphChristofides.cpp
-    MatchingChristofides.cpp
+    # BinaryHeapChristofides.cpp
+    # GraphChristofides.cpp
+    # MatchingChristofides.cpp
     Stopwatch.cpp
     hungarian.cpp
     LocalImprovements.cpp
+    Greedy.cpp
 )

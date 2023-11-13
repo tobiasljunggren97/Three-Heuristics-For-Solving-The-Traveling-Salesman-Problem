@@ -306,8 +306,88 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g)
 //    return cost;
 //  }
 
-void hungarian(Graph &g)
-{
+
+
+vector<int> hungarianMatching(Graph &g, vector<int> &right, vector<int> &left){
+  vector<WeightedBipartiteEdge> allEdges;
+  for (int i = 0; i < left.size(); i++)
+  {
+    for (int j = 0; j < right.size(); j++)
+    {
+      allEdges.push_back(WeightedBipartiteEdge(i, j, g.getWeight(left[i], right[j])));
+    }
+  }
+  return hungarianMinimumWeightPerfectMatching(right.size(), allEdges);
+}
+
+
+
+void hungarian(Graph &g){
+  vector<int> S;
+  vector<int> right;
+  vector<int> left;
+  vector<int> right2;
+  vector<int> left2;
+  for (int i = 0; i < g.getN(); i++)
+  {
+    if (g.getNeighbors(i).size() % 2 != 0)
+    {
+      S.push_back(i);
+    }
+  }
+
+  //Partition every other node into left and right
+  for (int i = 0; i < S.size(); i++)
+  {
+    if (i % 2 == 0)
+    {
+      right.push_back(S[i]);
+    }
+    else
+    {
+      left.push_back(S[i]);
+    }
+  }
+  //Partition the first half of S into left and the second half into right
+  for (int i = 0; i < S.size(); i++){
+    if (i < S.size()/2){
+      left2.push_back(S[i]);
+    }
+    else{
+      right2.push_back(S[i]);
+    }
+  }
+  vector<int> hungarianMatch = hungarianMatching(g, right, left);
+  vector<int> hungarianMatch2 = hungarianMatching(g, right2, left2);
+  int cost1 = 0;
+  int cost2 = 0;
+  for (int i = 0; i < hungarianMatch.size(); i++){
+    cost1 += g.getWeight(left[i], right[hungarianMatch[i]]);
+  }
+  for (int i = 0; i < hungarianMatch2.size(); i++){
+    cost2 += g.getWeight(left2[i], right2[hungarianMatch2[i]]);
+  }
+  // cout << "cost1: " << cost1 << endl;
+  // cout << "cost2: " << cost2 << endl;
+
+  if (cost1 < cost2){
+    // cout << "using cost1" << endl;
+  for (int i = 0; i < hungarianMatch.size(); i++)
+    {
+      g.addNeighbor(left[i], right[hungarianMatch[i]]);
+    }
+  }
+  else{
+    // cout << "using cost2" << endl;
+    for (int i = 0; i < hungarianMatch2.size(); i++)
+    {
+      g.addNeighbor(left2[i], right2[hungarianMatch2[i]]);
+    }
+  }
+
+}
+
+void oldhungarian(Graph &g){
   vector<WeightedBipartiteEdge> allEdges;
   vector<int> right;
   vector<int> left;
@@ -344,6 +424,7 @@ void hungarian(Graph &g)
   {
     g.addNeighbor(left[i], right[hungarianMatch[i]]);
   }
+
 }
 
 TSPSolution christofides(Graph &g)
@@ -367,12 +448,6 @@ TSPSolution christofides(Graph &g)
   stopwatch.start("TSP tour");
   TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
   stopwatch.stop();
-
-
-
-
-
-  
   
 
   
@@ -409,8 +484,9 @@ TSPSolution christofides(Graph &g)
   // TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
 
   // cout << "cost with two opt only: " << twoOptSol.cost << endl;
-
-  return christofidesSolution;
+  TSPSolution localImpr = twoOpt(christofidesSolution, g);
+  // cout << "final cost: " << localImpr.cost << endl;
+  return localImpr;
 }
 
 // // // SAVING OLD CHRISTOFIDES HERE JUST IN CASE.
