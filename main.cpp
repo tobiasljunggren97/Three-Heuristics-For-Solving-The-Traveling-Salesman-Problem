@@ -58,6 +58,7 @@ int main() {
     //Initializing Graph will read input and create weight matrix
     //Stopwatch stopwatch = Stopwatch();
     Graph g = Graph();
+
     //EDGE CASE, < 3 NODES
     if(g.getN() < 3){
         TSPSolution solution = tinyGraphEdgeCase(g);
