@@ -2,12 +2,12 @@
 #include "hungarian.h"
 #include "LocalImprovements.h"
 
-
 #define DEBUG 0
 
 using namespace std;
 
-void primss(Graph &g) {
+void primss(Graph &g)
+{
   Stopwatch stopwatch = Stopwatch();
   int numVertices = g.getN();
   vector<int> inMST(numVertices);
@@ -18,18 +18,23 @@ void primss(Graph &g) {
   stopwatch.stop();
   int count = 1;
 
-  while (count < numVertices) {
+  while (count < numVertices)
+  {
     int minWeightEdge = numeric_limits<int>::max();
     int minWeightNode = 0;
     int weight = 0;
     int neighbour = 0;
-    if (count == 1) {
+    if (count == 1)
+    {
       stopwatch.start("First iteration");
     }
-    for (int i = 0; i < toCheck.size(); i++) {
-      for (int j = toCheck[i]+1; j < numVertices; j++) {
+    for (int i = 0; i < toCheck.size(); i++)
+    {
+      for (int j = toCheck[i] + 1; j < numVertices; j++)
+      {
         weight = g.getWeight(toCheck[i], j);
-        if (weight < minWeightEdge && !inMST[j]) {
+        if (weight < minWeightEdge && !inMST[j])
+        {
           minWeightNode = j;
           minWeightEdge = weight;
           neighbour = toCheck[i];
@@ -41,24 +46,27 @@ void primss(Graph &g) {
     g.addNeighbor(neighbour, minWeightNode);
     count++;
     // cout << "Min edge " << neighbour << ", " << minWeightNode << " at weight " << weight << endl;
-    if (count == 1) {
+    if (count == 1)
+    {
       stopwatch.stop();
     }
   }
 }
 
-void prims(Graph &g) {
+void prims(Graph &g)
+{
   Stopwatch stopwatch = Stopwatch();
   int numVertices = g.getN();
   int currentVertex = 0;
   vector<int> inMST(numVertices);
   inMST[currentVertex] = 1;
 
-  vector<pair<int, int> > edgesToHandle;
+  vector<pair<int, int>> edgesToHandle;
   stopwatch.start("First edgesToHandle");
-  for (int i = 1; i < numVertices; i++) {
+  for (int i = 1; i < numVertices; i++)
+  {
     edgesToHandle.push_back(make_pair(currentVertex, i));
-  } 
+  }
   stopwatch.stop();
   int count = 1;
 
@@ -69,21 +77,26 @@ void prims(Graph &g) {
     int minWeightNode = 0;
     int weight = 0;
 
-    if (count == 1) {
+    if (count == 1)
+    {
       stopwatch.start("First iteration");
     }
-    for (int i = 0; i < edgesToHandle.size(); i++) {
-      if (i != currentVertex) {
-      weight = g.getWeight(edgesToHandle[i].first, edgesToHandle[i].second);
-      if (weight < minWeightEdge && !(inMST[edgesToHandle[i].first] && inMST[edgesToHandle[i].second])) {
-        currentVertex = edgesToHandle[i].first;
-        minWeightNode = edgesToHandle[i].second;
-        minWeightEdgeIndex = i;
-        minWeightEdge = weight;
-      }
+    for (int i = 0; i < edgesToHandle.size(); i++)
+    {
+      if (i != currentVertex)
+      {
+        weight = g.getWeight(edgesToHandle[i].first, edgesToHandle[i].second);
+        if (weight < minWeightEdge && !(inMST[edgesToHandle[i].first] && inMST[edgesToHandle[i].second]))
+        {
+          currentVertex = edgesToHandle[i].first;
+          minWeightNode = edgesToHandle[i].second;
+          minWeightEdgeIndex = i;
+          minWeightEdge = weight;
+        }
       }
     }
-    if (count == 1) {
+    if (count == 1)
+    {
       stopwatch.stop();
     }
     inMST[minWeightNode] = 1;
@@ -219,11 +232,11 @@ vector<int> eulerian_tour(Graph &g)
 // 	//Read the graph
 // 	pair< GraphC, vector<double> > p = ReadWeightedGraph(graph, S);
 //   stopwatch.stop();
-    
+
 // 	//pair< GraphC, vector<double> > p = CreateRandomGraph();
 // 	G = p.first;
 // 	cost = p.second;
-  
+
 //   // for (int i = 0; i < G.GetNumEdges(); i++)
 // 	// {
 // 	// 	pair<int, int> e = G.GetEdge(i);
@@ -293,7 +306,8 @@ TSPSolution tsp_tour(vector<int> &eularianTour, Graph &g)
 //    return cost;
 //  }
 
-void hungarian(Graph &g){
+void hungarian(Graph &g)
+{
   vector<WeightedBipartiteEdge> allEdges;
   vector<int> right;
   vector<int> left;
@@ -354,19 +368,49 @@ TSPSolution christofides(Graph &g)
   TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
   stopwatch.stop();
 
-  stopwatch.start("Simmulated Annealing with Two opt"); 
-  TSPSolution localImpr = simmulated_annealing_with_twoOpt(christofidesSolution, g); 
-  stopwatch.stop(); 
 
-  cout << "cost with simmulated annealing: " << localImpr.cost << endl; 
-  cout << "cost before regular two opt: " << christofidesSolution.cost << endl; 
+
+
+
+  
+  
+
+  
   TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
+  vector<int> path = twoOptSol.tour;
+  cout << "Cost for two opt: " << twoOptSol.cost << endl;
+  int thecost = 0;
+  path = christofidesSolution.tour;
+  cout << "Tour before three opt:" << endl; 
+  for (int i = 0; i < path.size()-1; i++) {
+    
+    cout << path[i] << "->";
+    thecost += g.getWeight(path[i], path[i+1]);
+  }
+  cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
+  thecost = 0; 
 
-  cout << "cost with two opt only: " << twoOptSol.cost << endl; 
+  threeOpt(christofidesSolution, g);
+  cout << "Cost for three opt: " << christofidesSolution.cost << endl;
+  path = christofidesSolution.tour;
+  for (int i = 0; i < path.size()-1; i++) {
+    cout << path[i] << "->";
+    thecost += g.getWeight(path[i], path[i+1]);
+  }
+  cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
+  // cout << "MATRIX: " << endl; 
+  // g.printWeightMatrix();
+  // stopwatch.start("Simmulated Annealing with Two opt");
+  // TSPSolution localImpr = simmulated_annealing_with_twoOpt(christofidesSolution, g);
+  // stopwatch.stop();
 
+  // cout << "cost with simmulated annealing: " << localImpr.cost << endl;
+  // cout << "cost before regular two opt: " << christofidesSolution.cost << endl;
+  // TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
 
+  // cout << "cost with two opt only: " << twoOptSol.cost << endl;
 
-  return localImpr;
+  return christofidesSolution;
 }
 
 // // // SAVING OLD CHRISTOFIDES HERE JUST IN CASE.

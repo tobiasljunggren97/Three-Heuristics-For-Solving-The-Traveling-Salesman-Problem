@@ -76,7 +76,8 @@
         "stack": "cpp",
         "unordered_set": "cpp",
         "variant": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "*.tcc": "cpp"
     },
     "cmake.configureOnOpen": false
 }

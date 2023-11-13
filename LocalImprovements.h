@@ -12,4 +12,6 @@
 TSPSolution twoOpt (TSPSolution solution, Graph &graph);
 TSPSolution simmulated_annealing_with_twoOpt(TSPSolution solution, Graph &g); 
 
+void threeOpt(TSPSolution &solution, Graph &g);
+
 #endif // LOCALIMPROVEMENTS_H
