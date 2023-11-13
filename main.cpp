@@ -35,7 +35,7 @@ void generateRandomVector(vector<int> &randomVector, int size, int min, int max)
 }
 
 
-TSPSolution checkEdgeCase(Graph &g){
+TSPSolution tinyGraphEdgeCase(Graph &g){
     int n = g.getN();
     if(n == 2){
         TSPSolution solution;
@@ -60,7 +60,7 @@ int main() {
     Graph g = Graph();
     //EDGE CASE, < 3 NODES
     if(g.getN() < 3){
-        TSPSolution solution = checkEdgeCase(g);
+        TSPSolution solution = tinyGraphEdgeCase(g);
         printSolution(solution, g);
         return 0;
     }

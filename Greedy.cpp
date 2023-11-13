@@ -51,6 +51,28 @@ struct Node {
     }
 };
 
+
+
+TSPSolution tinyGraphEdgeCase(Graph &g){
+    int n = g.getN();
+    if(n == 2){
+        TSPSolution solution;
+        solution.tour = vector<int>(n);
+        solution.cost = 0;
+        solution.tour[0] = 0;
+        solution.tour[1] = 1;
+        solution.cost = g.getWeight(0, 1);
+        return solution;
+    } else {
+        TSPSolution solution;
+        solution.tour = vector<int>(n);
+        solution.cost = 0;
+        solution.tour[0] = 0;
+        return solution;
+    }
+}
+
+
 int findPrematureCycle(Node *node, int n, vector<Node> &nodes) {
     Node *currentNode = node;
     int counter = 0;
@@ -77,6 +99,12 @@ int findPrematureCycle(Node *node, int n, vector<Node> &nodes) {
 
 TSPSolution greedy(Graph &g) {
     int n = g.getN();
+    if(n < 3){
+        TSPSolution solution = tinyGraphEdgeCase(g);
+        return solution;
+    }
+
+
     int currentVertex = 0;
 
     // Sort all edges by weight
