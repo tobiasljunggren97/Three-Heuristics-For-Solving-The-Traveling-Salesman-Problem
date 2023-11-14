@@ -12,7 +12,6 @@ TSPSolution nearestNeighbor(Graph &g, int startNode) {
     vector<int> visited(numVertices);
     visited[currentVertex] = 1;
     int counter = 1;
-    const vector<int> weights;
 
 
     int minWeight = numeric_limits<int>::max();
@@ -38,8 +37,7 @@ TSPSolution nearestNeighbor(Graph &g, int startNode) {
         counter++;
     }
     tspSolution.cost += g.getWeight(currentVertex, startNode);
-    TSPSolution localImpr = twoOpt(tspSolution, g);
-    return localImpr;
+    return tspSolution;
 }
 
 struct Node {
@@ -53,7 +51,7 @@ struct Node {
 
 
 
-TSPSolution tinyGraphEdgeCase(Graph &g){
+TSPSolution tinyGraph(Graph &g){
     int n = g.getN();
     if(n == 2){
         TSPSolution solution;
@@ -100,7 +98,7 @@ int findPrematureCycle(Node *node, int n, vector<Node> &nodes) {
 TSPSolution greedy(Graph &g) {
     int n = g.getN();
     if(n < 3){
-        TSPSolution solution = tinyGraphEdgeCase(g);
+        TSPSolution solution = tinyGraph(g);
         return solution;
     }
 
@@ -166,6 +164,6 @@ TSPSolution greedy(Graph &g) {
     }
 
 
-    TSPSolution localImpr = twoOpt(solution, g);
-    return localImpr;
+    // TSPSolution localImpr = twoOpt(solution, g);
+    return solution;
 }

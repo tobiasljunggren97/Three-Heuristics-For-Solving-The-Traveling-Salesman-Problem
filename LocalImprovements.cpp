@@ -163,11 +163,11 @@ void copySolution(TSPSolution &solution, vector<int> &newTour, int &index, Graph
 void copySolutionReversed(TSPSolution &solution, vector<int> &newTour, int &index, Graph &g, int start, int finish) 
 {
 	if (start < finish) {
-		for (int i = start-1; i > 0 ; i--) {
+		for (int i = start-1; i >= 0 ; i--) {
 			newTour[index] = solution.tour[i];
 			index++;
 		}
-		for (int j = g.getN(); j > finish; j--) {
+		for (int j = g.getN()-1; j > finish; j--) {
 			newTour[index] = solution.tour[j];
 			index++;
 		}
@@ -275,6 +275,7 @@ void changeSolution(TSPSolution &solution, Graph &g, int i, int j, int k, int va
 		reverse(solution.tour.begin() + i + 1, solution.tour.begin() + k + 1);
 		return;
 	default: // Variant 7
+		cout << "HEJ" << variant << endl;
 		reverse(solution.tour.begin() + i + 1, solution.tour.begin() + j + 1);
 		return;
 	}
@@ -304,13 +305,13 @@ int bestSolution(TSPSolution &solution, Graph &g, int i, int j, int k)
 	int v4Cost = g.getWeight(solution.tour[j], solution.tour[i]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(i + 1) % n]);
 
 	// two opt (j, k)
-	int v5Cost = g.getWeight(solution.tour[j], solution.tour[(k + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(j + 1) % n]);
+	int v5Cost = g.getWeight(solution.tour[j], solution.tour[k]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[(i + 1) % n]);
 
 	// two opt ( i, k)
-	int v6Cost = g.getWeight(solution.tour[i], solution.tour[(k + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(i + 1) % n]);
+	int v6Cost = g.getWeight(solution.tour[i], solution.tour[k]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(i + 1) % n]) + g.getWeight(solution.tour[j], solution.tour[(j + 1) % n]);;
 
 	// two opt (i, j)
-	int v7Cost = g.getWeight(solution.tour[i], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[j], solution.tour[(i + 1) % n]);
+	int v7Cost = g.getWeight(solution.tour[i], solution.tour[j]) + g.getWeight(solution.tour[(j + 1) % n], solution.tour[(i + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(k + 1) % n]);;
 
 	vector<int> costs = {v1Cost, v2Cost, v3Cost, v4Cost, v5Cost, v6Cost, v7Cost};
 
@@ -323,31 +324,14 @@ int bestSolution(TSPSolution &solution, Graph &g, int i, int j, int k)
 		}
 	}
 
-	if (newCost + minAddedCost < solution.cost)
+	if (newCost + minAddedCost < (solution.cost))
 	{
 		
 		solution.cost = newCost + minAddedCost;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "Better solution found! New Cost is: " << solution.cost << endl; 
-		cout << "Edges: " << solution.tour[i] << " - " << solution.tour[(i+1)%n] << " , " << solution.tour[j] << " - " << solution.tour[(j+1)%n] << " , " << solution.tour[k] << " - " << solution.tour[(k+1)%n] << endl; 
-		cout << "Variant: v" << minVariant << endl;
-
-		cout << "Previous path:" << endl; 
 		printSolution1(solution, g); 
 		changeSolution(solution, g, i, j, k, minVariant);
-		cout << "New path:" << endl; 
+
 		printSolution1(solution, g); 
-		
-		
-
-
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
-		cout << "------------------------------------------------------------------------------" << endl;
 		return 1;
 	}
 	return 0; 
@@ -358,15 +342,15 @@ void threeOpt(TSPSolution &solution, Graph &g)
 	int N = solution.tour.size();
 	int improved = 1;
 	int tempImproved;
-	// while (improved)
-	// {
+	while (improved)
+	{
 		improved = 0;
 
-		for (int i = 0; i < N - 2; i++)
+		for (int i = 0; i < N - 3; i++)
 		{
-			for (int j = i+1; j < N - 1; j++)
+			for (int j = i+2; j < N - 2; j++)
 			{
-				for (int k = j+1; k < N; k++)
+				for (int k = j+2; k < N-1; k++)
 				{
 					tempImproved = bestSolution(solution, g, i, j, k);
 					if (tempImproved == 1) {
@@ -377,5 +361,5 @@ void threeOpt(TSPSolution &solution, Graph &g)
 			}
 		}
 		
-	// }
+	}
 }
