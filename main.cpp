@@ -6,6 +6,7 @@
 #include "main.h"
 #include <algorithm>
 #include "TSPSolution.h"
+#include "LocalImprovements.h"
 #include "Stopwatch.h"
 
 #include <fstream>
@@ -164,7 +165,7 @@ int main() {
 
     }
     myfile.close();
-    
+
 
 }
 
@@ -206,4 +207,5 @@ int main() {
 
 //     return 0;
 // }
+
 

@@ -12,7 +12,6 @@ TSPSolution nearestNeighbor(Graph &g, int startNode) {
     vector<int> visited(numVertices);
     visited[currentVertex] = 1;
     int counter = 1;
-    const vector<int> weights;
 
 
     int minWeight = numeric_limits<int>::max();
@@ -38,8 +37,7 @@ TSPSolution nearestNeighbor(Graph &g, int startNode) {
         counter++;
     }
     tspSolution.cost += g.getWeight(currentVertex, startNode);
-    TSPSolution localImpr = twoOpt(tspSolution, g);
-    return localImpr;
+    return tspSolution;
 }
 
 struct Node {
@@ -166,6 +164,6 @@ TSPSolution greedy(Graph &g) {
     }
 
 
-    TSPSolution localImpr = twoOpt(solution, g);
-    return localImpr;
+    // TSPSolution localImpr = twoOpt(solution, g);
+    return solution;
 }
