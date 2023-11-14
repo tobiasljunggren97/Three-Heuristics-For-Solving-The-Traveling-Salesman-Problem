@@ -6,6 +6,7 @@
 #include "main.h"
 #include <algorithm>
 #include "TSPSolution.h"
+#include "LocalImprovements.h"
 #include "Stopwatch.h"
 
 #include <fstream>
@@ -54,17 +55,18 @@ TSPSolution tinyGraphEdgeCase(Graph &g){
     }
 }
 
+
 int main() {
     //Initializing Graph will read input and create weight matrix
     //Stopwatch stopwatch = Stopwatch();
     Graph g = Graph();
 
     //EDGE CASE, < 3 NODES
-    if(g.getN() < 3){
-        TSPSolution solution = tinyGraphEdgeCase(g);
-        printSolution(solution, g);
-        return 0;
-    }
+    // if(g.getN() < 3){
+    //     TSPSolution solution = tinyGraphEdgeCase(g);
+    //     printSolution(solution, g);
+    //     return 0;
+    // }
     TSPSolution solution;
     TSPSolution bestNNSolution;
     bestNNSolution.cost = numeric_limits<int>::max();
@@ -80,14 +82,30 @@ int main() {
             bestNNSolution = solution;
         }
     }
-    TSPSolution greedySolution;
-    greedySolution = greedy(g);
-    if (greedySolution.cost < bestNNSolution.cost) {
-        printSolution(greedySolution, g);
-    } else {
-        printSolution(bestNNSolution, g);
-    }
+    // TSPSolution greedySolution;
+    // greedySolution = greedy(g);
+    // if (greedySolution.cost < bestNNSolution.cost) {
+    //     // cout << "Tour before 3-opt: " << endl;
+    //     // printSolution(greedySolution, g);
+    //     cout << "Original tour cost: " << greedySolution.cost << endl;
+    //     threeOpt(greedySolution, g);
+    // } else {
+    // cout << "Tour before 3-opt: " << endl;
+    threeOpt(bestNNSolution, g);
+    printSolution(bestNNSolution, g);
+    // cout << "Original tour cost: " << bestNNSolution.cost << endl;
+    // TSPSolution twoOptSolution = twoOpt(bestNNSolution, g);
+    // threeOpt(bestNNSolution, g);
+    // cout << "Three opt solution cost: " << bestNNSolution.cost << endl; 
+    // cout << " VSn" << endl; 
+    // cout << "Two opt solution cost: " << twoOptSolution.cost << endl; 
+    
+    // }
+
+    
 
     return 0;
 }
+
+
 
