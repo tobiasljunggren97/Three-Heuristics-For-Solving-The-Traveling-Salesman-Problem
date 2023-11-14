@@ -9,12 +9,17 @@ void Stopwatch::start(string name)
     }
 }
 
-void Stopwatch::stop()
+double Stopwatch::stop()
 {
     if(DEBUG){
     endTime = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = endTime - startTime;
-    //Print in milliseconds and cut off after 5 decimals 
-    cout << name << " took " << std::setprecision(5) << elapsed_seconds.count() * 1000 << " milliseconds" << endl;
+    if(print){
+        //Print in milliseconds and cut off after 5 decimals 
+        cout << name << " took " << std::setprecision(5) << elapsed_seconds.count() * 1000 << " milliseconds" << endl;
+    }
+    return elapsed_seconds.count();
+    } else {
+        return 0;
     }
 }

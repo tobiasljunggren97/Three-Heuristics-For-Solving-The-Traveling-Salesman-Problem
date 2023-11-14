@@ -53,7 +53,7 @@ struct Node {
 
 
 
-TSPSolution tinyGraphEdgeCase(Graph &g){
+TSPSolution tinyGraph(Graph &g){
     int n = g.getN();
     if(n == 2){
         TSPSolution solution;
@@ -100,7 +100,7 @@ int findPrematureCycle(Node *node, int n, vector<Node> &nodes) {
 TSPSolution greedy(Graph &g) {
     int n = g.getN();
     if(n < 3){
-        TSPSolution solution = tinyGraphEdgeCase(g);
+        TSPSolution solution = tinyGraph(g);
         return solution;
     }
 
