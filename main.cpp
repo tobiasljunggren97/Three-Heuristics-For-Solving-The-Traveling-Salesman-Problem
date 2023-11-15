@@ -12,6 +12,7 @@
 #include <fstream>
 
 using namespace std;
+#define NR_OF_RUNS 10
 
 void printSolution(TSPSolution &solution, Graph &g)
 {
@@ -67,7 +68,7 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         int NNcost = 0;
         TSPSolution solution;
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             TSPSolution bestNNSolution;
             bestNNSolution.cost = numeric_limits<int>::max();
 
@@ -86,13 +87,12 @@ void benchmarking(ofstream &myfile, string filename){
             NNcost += bestNNSolution.cost;
         }
         double NNWithRandomTime = stopwatch.stop();
-        NNWithRandomTime /= 1000;
-        NNcost /= 1000;
+        NNWithRandomTime /= NR_OF_RUNS;
+        NNcost /= NR_OF_RUNS;
         
         myfile << "NN with max 25 random starting points: " << endl;
         myfile << "Time: " << NNWithRandomTime << endl;
         myfile << "Cost: " << NNcost << endl;
-        myfile << endl;
 
     }
 
@@ -101,12 +101,12 @@ void benchmarking(ofstream &myfile, string filename){
         TSPSolution solution;
         int runCount = 0;
         stopwatch.start("NN with 0 as starting point");
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             solution = nearestNeighbor(g, 0);
             runCount++;
         }
         double NNWithZeroTime = stopwatch.stop();
-        NNWithZeroTime /= 1000;
+        NNWithZeroTime /= NR_OF_RUNS;
         myfile << "NN with 0 as starting point: " << endl;
         myfile << "Time: " << NNWithZeroTime << endl;
         myfile << "Cost: " << solution.cost << endl;
@@ -116,12 +116,12 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         TSPSolution solution;
         stopwatch.start("Greedy");
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             solution = greedy(g);
             runCount++;
         }
         double greedyTime = stopwatch.stop();
-        greedyTime /= 1000;
+        greedyTime /= NR_OF_RUNS;
         myfile << "Greedy: " << endl;
         myfile << "Time: " << greedyTime << endl;
         myfile << "Cost: " << solution.cost << endl;
@@ -132,14 +132,14 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         double totChristTime = 0;
         TSPSolution solution;
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             Graph f  = Graph(filename);
             stopwatch.start("Christofides");
             solution = christofides(f);
             totChristTime += stopwatch.stop();
             runCount++;
         }
-        totChristTime /= 1000;
+        totChristTime /= NR_OF_RUNS;
         myfile << "Christofides: " << endl;
         myfile << "Time: " << totChristTime << endl;
         myfile << "Cost: " << solution.cost << endl;
@@ -149,13 +149,13 @@ void benchmarking(ofstream &myfile, string filename){
 int main() {
 
     ofstream myfile;
-    myfile.open("benchmarking.txt");
+    myfile.open("../benchmarking.txt");
     myfile << "Benchmarking results" << endl;
     myfile << "---------------------" << endl;
     myfile << endl;
 
     string fileheader = "../benchmarkingtests/";
-    vector<string> fileendings = {"5nodes1.txt", "5nodes2.txt", "5nodes3.txt", "50nodes1.txt", "50nodes2.txt", "50nodes3.txt", "250nodes1.txt", "250nodes2.txt", "250nodes3.txt", "1000nodes1.txt", "1000nodes2.txt", "1000nodes3.txt"};
+    vector<string> fileendings = {"5nodes1.txt", "50nodes1.txt", "250nodes1.txt", "500nodes1.txt", "1000nodes1.txt"};
     for(int i = 0; i < fileendings.size(); i++){
         string filename = fileheader + fileendings[i];
         cout << "Benchmarking with " << filename << endl;

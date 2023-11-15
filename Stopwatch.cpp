@@ -1,9 +1,9 @@
 #include "Stopwatch.h"
-#define DEBUG 1
+#define DEBUG 0
 
 void Stopwatch::start(string name)
 {
-    if(DEBUG){
+    if(DEBUG || !print ){
     this->name = name;
     startTime = std::chrono::system_clock::now();
     }
@@ -11,14 +11,14 @@ void Stopwatch::start(string name)
 
 double Stopwatch::stop()
 {
-    if(DEBUG){
+    if(DEBUG || !print){
     endTime = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = endTime - startTime;
-    if(print){
-        //Print in milliseconds and cut off after 5 decimals 
-        cout << name << " took " << std::setprecision(5) << elapsed_seconds.count() * 1000 << " milliseconds" << endl;
-    }
-    return elapsed_seconds.count();
+        if(print){
+            //Print in milliseconds and cut off after 5 decimals 
+            cout << name << " took " << std::setprecision(5) << elapsed_seconds.count() * 1000 << " milliseconds" << endl;
+        }
+    return elapsed_seconds.count() * 1000;
     } else {
         return 0;
     }

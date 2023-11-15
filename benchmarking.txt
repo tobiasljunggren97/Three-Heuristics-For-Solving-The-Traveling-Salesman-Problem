@@ -1,0 +1,73 @@
+Benchmarking results
+---------------------
+
+Benchmarking with ../benchmarkingtests/5nodes1.txt
+NN with max 25 random starting points: 
+Time: 0,0174
+Cost: 14852
+NN with 0 as starting point: 
+Time: 0,0018
+Cost: 14852
+Greedy: 
+Time: 0,0089
+Cost: 14852
+Christofides: 
+Time: 0,0946
+Cost: 14852
+---------------------
+Benchmarking with ../benchmarkingtests/50nodes1.txt
+NN with max 25 random starting points: 
+Time: 1,3587
+Cost: 55593
+NN with 0 as starting point: 
+Time: 0,0589
+Cost: 57073
+Greedy: 
+Time: 1,4434
+Cost: 63982
+Christofides: 
+Time: 2,2211
+Cost: 109815
+---------------------
+Benchmarking with ../benchmarkingtests/250nodes1.txt
+NN with max 25 random starting points: 
+Time: 67,8648
+Cost: 142143
+NN with 0 as starting point: 
+Time: 14,1493
+Cost: 148851
+Greedy: 
+Time: 82,7945
+Cost: 157391
+Christofides: 
+Time: 378,136
+Cost: 289379
+---------------------
+Benchmarking with ../benchmarkingtests/500nodes1.txt
+NN with max 25 random starting points: 
+Time: 114,383
+Cost: 196186
+NN with 0 as starting point: 
+Time: 3,6236
+Cost: 196808
+Greedy: 
+Time: 284,695
+Cost: 219806
+Christofides: 
+Time: 1117,08
+Cost: 523977
+---------------------
+Benchmarking with ../benchmarkingtests/1000nodes1.txt
+NN with max 25 random starting points: 
+Time: 337,772
+Cost: 280534
+NN with 0 as starting point: 
+Time: 30,6793
+Cost: 288713
+Greedy: 
+Time: 744,142
+Cost: 304080
+Christofides: 
+Time: 9780,23
+Cost: 1,1796e+06
+---------------------
