@@ -32,7 +32,7 @@ TEST(GraphClassTests, TestingTwoOpt50NodesImprovesNNSolution) {
     int solSimpleCost = calculateCost(solSimple.tour, g);
     // int solTwoOpt = calculateCost(solTwoOpt, )
 
-    EXPECT_GE()
+    // EXPECT_GE()
 
 
 
