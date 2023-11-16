@@ -9,8 +9,9 @@ set(Sources
     GraphClassTests.cpp
     EularianTSPTourTests.cpp
     PrimsTest.cpp
-    GreedyAlgorithmsTests.cpp
     TwoOptTests.cpp
+    GreedyAlgorithmsTests.cpp
+    
 )
 
 add_executable(${This} ${Sources})

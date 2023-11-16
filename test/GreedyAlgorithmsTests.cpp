@@ -39,6 +39,7 @@ TSPSolution nearestRandom(Graph &g) {
     int size = 25 > g.getN() ? g.getN() : 25;
     TSPSolution solution;
     TSPSolution bestNNSolution;
+    bestNNSolution.cost = numeric_limits<int>::max(); // obs obs vendela la till.  
     vector<int> randomVector;
 
     generateRandomVector(randomVector, size, 0, g.getN());
@@ -115,6 +116,8 @@ TEST(GraphClassTests, TestingNN50Nodes){
     TSPSolution solution = nearestRandom(g);
     double time = stopwatch.stop();
     EXPECT_LE(time, 1);
+    EXPECT_TRUE(g.getN() == 50);
+    cout << "WHAT IS SIZE OF SOLUTION? " << solution.tour.size() << endl;
     EXPECT_TRUE(solution.tour.size() >= 50);
     EXPECT_TRUE(validRoute(solution.tour, g));
     TSPSolution naiveSol = naive(g);
@@ -224,6 +227,6 @@ TEST(GraphClassTests, TestingNN1000Nodes){
     TSPSolution naiveSol3 = naive(i);
     solutionCost = calculateCost(solution3.tour, i);
     naiveSolCost = calculateCost(naiveSol3.tour, i);
-    EXPECT_LE(solutionCost, naiveSolCost);
+    EXPECT_LE(solutionCost, naiveSolCost); // DETTA TEST FAILAR! 
 };
 
