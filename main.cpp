@@ -150,66 +150,71 @@ void benchmarking(ofstream &myfile, string filename){
     }
 }
 
-int main() {
+// BENCHMARKING MAIN
+// int main() {
 
-    ofstream myfile;
-    myfile.open("../benchmarkingWith2OPT.txt");
-    myfile << "Benchmarking results" << endl;
-    myfile << "---------------------" << endl;
-    myfile << endl;
+//     ofstream myfile;
+//     myfile.open("benchmarking.txt");
+//     myfile << "Benchmarking results" << endl;
+//     myfile << "---------------------" << endl;
+//     myfile << endl;
 
-    string fileheader = "../benchmarkingtests/";
-    vector<string> fileendings = {"5nodes1.txt", "50nodes1.txt", "250nodes1.txt", "500nodes1.txt", "1000nodes1.txt"};
-    for(int i = 0; i < fileendings.size(); i++){
-        string filename = fileheader + fileendings[i];
-        cout << "Benchmarking with " << filename << endl;
-        myfile << "Benchmarking with " << filename << endl;
-        benchmarking(myfile, filename);
-        myfile << "---------------------" << endl;
+//     string fileheader = "../benchmarkingtests/";
+//     vector<string> fileendings = {"5nodes1.txt", "5nodes2.txt", "5nodes3.txt", "50nodes1.txt", "50nodes2.txt", "50nodes3.txt", "250nodes1.txt", "250nodes2.txt", "250nodes3.txt", "1000nodes1.txt", "1000nodes2.txt", "1000nodes3.txt"};
+//     for(int i = 0; i < fileendings.size(); i++){
+//         string filename = fileheader + fileendings[i];
+//         cout << "Benchmarking with " << filename << endl;
+//         myfile << "Benchmarking with " << filename << endl;
+//         benchmarking(myfile, filename);
+//         myfile << "---------------------" << endl;
 
-    }
-    myfile.close();
+//     }
+//     myfile.close();
 
 
-}
+// }
 
 
 // MAIN MAIN FUNCTION, FOR KATTIS
-// int main() {
-//     //Initializing Graph will read input and create weight matrix
-//     //Stopwatch stopwatch = Stopwatch();
-//     Graph g = Graph();
+int main() {
+    //Initializing Graph will read input and create weight matrix
+    //Stopwatch stopwatch = Stopwatch();
+    Graph g = Graph();
 
-//     //EDGE CASE, < 3 NODES
-//     if(g.getN() < 3){
-//         TSPSolution solution = tinyGraphEdgeCase(g);
-//         printSolution(solution, g);
-//         return 0;
-//     }
-//     TSPSolution solution;
-//     TSPSolution bestNNSolution;
-//     bestNNSolution.cost = numeric_limits<int>::max();
+    //EDGE CASE, < 3 NODES
+    if(g.getN() < 3){
+        TSPSolution solution = tinyGraphEdgeCase(g);
+        printSolution(solution, g);
+        return 0;
+    }
 
-//     int size = 25 > g.getN() ? g.getN() : 25;
+    TSPSolution solution;
+    TSPSolution bestNNSolution;
+    bestNNSolution.cost = numeric_limits<int>::max();
 
-//     vector<int> randomVector;
+    int size = 25 > g.getN() ? g.getN() : 25;
 
-//     generateRandomVector(randomVector, size, 0, g.getN());
-//     for (int i = 0; i < size; i++) {
-//         solution = nearestNeighbor(g, randomVector[i]);
-//         if (solution.cost < bestNNSolution.cost) {
-//             bestNNSolution = solution;
-//         }
-//     }
-//     TSPSolution greedySolution;
-//     greedySolution = greedy(g);
-//     if (greedySolution.cost < bestNNSolution.cost) {
-//         printSolution(greedySolution, g);
-//     } else {
-//         printSolution(bestNNSolution, g);
-//     }
+    vector<int> randomVector;
 
-//     return 0;
-// }
+    generateRandomVector(randomVector, size, 0, g.getN());
+    for (int i = 0; i < size; i++) {
+        solution = nearestNeighbor(g, randomVector[i]);
+        solution = twoOpt(solution, g);
+        if (solution.cost < bestNNSolution.cost) {
+            bestNNSolution = solution;
+        }
+    }
+
+    printSolution(bestNNSolution, g);
+    // TSPSolution greedySolution;
+    // greedySolution = greedy(g);
+    // if (greedySolution.cost < bestNNSolution.cost) {
+    //     printSolution(greedySolution, g);
+    // } else {
+        // printSolution(bestNNSolution, g);
+    // }
+
+    return 0;
+}
 
 

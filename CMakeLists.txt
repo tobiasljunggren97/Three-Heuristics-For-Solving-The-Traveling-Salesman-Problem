@@ -23,6 +23,7 @@ set(Headers
     hungarian.h
     LocalImprovements.h
     Greedy.h
+    Naive.h
 )
 
 set(Sources
@@ -36,6 +37,7 @@ set(Sources
     hungarian.cpp
     LocalImprovements.cpp
     Greedy.cpp
+    Naive.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})
@@ -54,4 +56,5 @@ add_executable(
     hungarian.cpp
     LocalImprovements.cpp
     Greedy.cpp
+    Naive.cpp
 )

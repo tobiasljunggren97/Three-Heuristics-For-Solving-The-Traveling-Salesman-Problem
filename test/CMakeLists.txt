@@ -9,7 +9,9 @@ set(Sources
     GraphClassTests.cpp
     EularianTSPTourTests.cpp
     PrimsTest.cpp
+    TwoOptTests.cpp
     GreedyAlgorithmsTests.cpp
+    
 )
 
 add_executable(${This} ${Sources})
@@ -25,6 +27,6 @@ add_test(
 )
 
 
-set_tests_properties(${This} PROPERTIES ENVIRONMENT "GTEST_FILTER=EularianTour*")
+#set_tests_properties(${This} PROPERTIES ENVIRONMENT "GTEST_FILTER=EularianTour*")
 
 
