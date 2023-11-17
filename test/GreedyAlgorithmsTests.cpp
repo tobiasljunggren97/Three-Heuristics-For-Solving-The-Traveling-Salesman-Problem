@@ -39,7 +39,7 @@ TSPSolution nearestRandom(Graph &g) {
     int size = 25 > g.getN() ? g.getN() : 25;
     TSPSolution solution;
     TSPSolution bestNNSolution;
-    bestNNSolution.cost = numeric_limits<int>::max(); // obs obs vendela la till.  
+    bestNNSolution.cost = numeric_limits<int>::max(); 
     vector<int> randomVector;
 
     generateRandomVector(randomVector, size, 0, g.getN());
