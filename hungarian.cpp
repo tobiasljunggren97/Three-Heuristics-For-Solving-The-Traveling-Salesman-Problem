@@ -66,12 +66,10 @@ const std::vector<int> hungarianMinimumWeightPerfectMatching(const int n, const 
         fo(edgeIndex, allEdges.size()) {
             const WeightedBipartiteEdge& edge = allEdges[edgeIndex];
             if (edge.left >= 0 && edge.left < n) {
-            // if (edge.left >= 0) {
 
                 ++leftEdgeCounts[edge.left];
             }
             if (edge.right >= 0 && edge.right < n) {
-            // if (edge.right >= 0) {
 
                 ++rightEdgeCounts[edge.right];
             }
