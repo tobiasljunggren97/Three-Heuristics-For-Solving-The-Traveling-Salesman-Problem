@@ -28,7 +28,7 @@ TEST(GraphClassTests, TestingTwoOpt5NodesImprovesNNSolution1)
     string filename = TEST_INPUT_DIR "5nodes1.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -42,14 +42,13 @@ TEST(GraphClassTests, TestingTwoOpt5NodesImprovesNNSolution2)
     string filename = TEST_INPUT_DIR "5nodes2.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
     int solSimpleCost = calcCost(solSimple.tour, g);
     int solTwoOptCost = calcCost(solTwoOpt.tour, g);
-    cout << "what is twoOpt cost? " << solTwoOptCost << " and what is solsimpleCost? " << solSimpleCost << endl;
-    EXPECT_LE(solTwoOptCost, solSimpleCost); // DETTA TEST FAILAR!
+    EXPECT_LE(solTwoOptCost, solSimpleCost); 
 }
 
 TEST(GraphClassTests, TestingTwoOpt5NodesImprovesNNSolution3)
@@ -57,7 +56,7 @@ TEST(GraphClassTests, TestingTwoOpt5NodesImprovesNNSolution3)
     string filename = TEST_INPUT_DIR "5nodes3.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -73,7 +72,7 @@ TEST(GraphClassTests, TestingTwoOpt50NodesImprovesNNSolution1)
     string filename = TEST_INPUT_DIR "50nodes1.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -87,7 +86,7 @@ TEST(GraphClassTests, TestingTwoOpt50NodesImprovesNNSolution2)
     string filename = TEST_INPUT_DIR "50nodes2.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -101,7 +100,7 @@ TEST(GraphClassTests, TestingTwoOpt50NodesImprovesNNSolution3)
     string filename = TEST_INPUT_DIR "50nodes3.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -117,7 +116,7 @@ TEST(GraphClassTests, TestingTwoOpt250NodesImprovesNNSolution1)
     string filename = TEST_INPUT_DIR "250nodes1.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -131,7 +130,7 @@ TEST(GraphClassTests, TestingTwoOpt250NodesImprovesNNSolution2)
     string filename = TEST_INPUT_DIR "250nodes2.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -145,7 +144,7 @@ TEST(GraphClassTests, TestingTwoOpt250NodesImprovesNNSolution3)
     string filename = TEST_INPUT_DIR "250nodes3.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -161,7 +160,7 @@ TEST(GraphClassTests, TestingTwoOpt1000NodesImprovesNNSolution1)
     string filename = TEST_INPUT_DIR "1000nodes1.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -175,7 +174,7 @@ TEST(GraphClassTests, TestingTwoOpt1000NodesImprovesNNSolution2)
     string filename = TEST_INPUT_DIR "1000nodes2.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
@@ -189,7 +188,7 @@ TEST(GraphClassTests, TestingTwoOpt1000NodesImprovesNNSolution3)
     string filename = TEST_INPUT_DIR "1000nodes3.txt";
     Graph g = Graph(filename);
 
-    TSPSolution solSimple = greedy(g);
+    TSPSolution solSimple = nearestNeighbor(g, 0);
 
     TSPSolution solTwoOpt = twoOpt(solSimple, g);
 
