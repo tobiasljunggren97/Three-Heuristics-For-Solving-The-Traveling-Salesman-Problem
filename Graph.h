@@ -38,7 +38,7 @@ public:
     // Setters
     void setAdjancecyList(vector<vector<int>> adjList);
     void addNeighbor(int node, int neighbor);
-    void removeNeighbor(int node, int neighbor); // ONLY REMOVES ONE NEIGHBOR NODE IF THERE ARE DUPLICATE EDGES
+    void removeNeighbor(int node, int neighbor); 
 
     // Helper functions
     void printAdjacencyList();

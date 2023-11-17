@@ -14,9 +14,6 @@ TSPSolution twoOpt(TSPSolution solution, Graph &g)
 			for (int j = i + 1; j <= n - 1; j++)
 			{
 				int newCost = solution.cost - g.getWeight(solution.tour[i], solution.tour[i + 1]) - g.getWeight(solution.tour[j], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[j]) + g.getWeight(solution.tour[i + 1], solution.tour[(j + 1) % n]);
-				// int newCost = solution.cost - g.getWeight(solution.tour[i], solution.tour[(i + 1) % n]) - g.getWeight(solution.tour[j], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[(j+1)%n]) + g.getWeight(solution.tour[j], solution.tour[(i + 1) % n]);
-
-				// Only do the swap if it improves the solution
 				if (newCost < solution.cost)
 				{
 					reverse(solution.tour.begin() + i + 1, solution.tour.begin() + j + 1);
@@ -35,25 +32,6 @@ double probabilityFunc(double oldCost, double newCost, double T)
 	return exp(-((newCost - oldCost) / T));
 }
 
-// TSPSolution tinyTwoOpt(TSPSolution solution, Graph &g)
-// {
-// 	int n = solution.tour.size();
-// 	// bool solutionImproved = true;
-// 	// solutionImproved = false;
-
-// 	for (int i = 0; i <= n - 2; i++)
-// 	{
-// 		for (int j = i + 1; j <= n - 1; j++)
-// 		{
-// 			int newCost = solution.cost - g.getWeight(solution.tour[i], solution.tour[i + 1]) - g.getWeight(solution.tour[j], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[j]) + g.getWeight(solution.tour[i + 1], solution.tour[(j + 1) % n]);
-// 			// Only do the swap if it improves the solution
-// 			reverse(solution.tour.begin() + i + 1, solution.tour.begin() + j + 1);
-// 			solution.cost = newCost;
-// 			// solutionImproved = true;
-// 		}
-// 	}
-// 	return solution;
-// }
 
 TSPSolution tinyTwoOpt(TSPSolution solution, Graph &g, int i, int j)
 {
@@ -93,9 +71,8 @@ TSPSolution simmulated_annealing_with_twoOpt(TSPSolution solution, Graph &g)
 
 		uniform_real_distribution<double> distribution(0.0, 1.0);
 		uniform_int_distribution<int> distribution_int(0, g.getN());
-		// gen.seed(static_cast<unsigned int>(time(0)));
 
-		i = distribution_int(gen); // fetch random first node.
+		i = distribution_int(gen); 
 		j = distribution_int(gen);
 
 		TSPSolution sol = tinyTwoOpt(currentSol, g, i, j);
@@ -106,7 +83,7 @@ TSPSolution simmulated_annealing_with_twoOpt(TSPSolution solution, Graph &g)
 		{
 			cout << "suuuuuuuuuuh" << endl;
 		}
-		r = distribution(gen); // generate random number
+		r = distribution(gen);
 
 		if (loopCounter < 5)
 		{
@@ -145,7 +122,7 @@ void copySolution(TSPSolution &solution, vector<int> &newTour, int &index, Graph
 	if (start > finish) {
 		for (int i = start+1; i < g.getN(); i++) {
 			newTour[index] = solution.tour[i];
-			index++; //Index gets incremented outside as well??????????????????
+			index++; 
 		}
 		for (int j = 0; j < finish; j++) {
 			newTour[index] = solution.tour[j];
@@ -274,7 +251,7 @@ void changeSolution(TSPSolution &solution, Graph &g, int i, int j, int k, int va
 	case 6:
 		reverse(solution.tour.begin() + i + 1, solution.tour.begin() + k + 1);
 		return;
-	default: // Variant 7
+	default: 
 		cout << "HEJ" << variant << endl;
 		reverse(solution.tour.begin() + i + 1, solution.tour.begin() + j + 1);
 		return;
@@ -304,13 +281,10 @@ int bestSolution(TSPSolution &solution, Graph &g, int i, int j, int k)
 	int v3Cost = g.getWeight(solution.tour[j], solution.tour[(k + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[k]) + g.getWeight(solution.tour[(j + 1) % n], solution.tour[(i + 1) % n]);
 	int v4Cost = g.getWeight(solution.tour[j], solution.tour[i]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(i + 1) % n]);
 
-	// two opt (j, k)
 	int v5Cost = g.getWeight(solution.tour[j], solution.tour[k]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(j + 1) % n]) + g.getWeight(solution.tour[i], solution.tour[(i + 1) % n]);
 
-	// two opt ( i, k)
 	int v6Cost = g.getWeight(solution.tour[i], solution.tour[k]) + g.getWeight(solution.tour[(k + 1) % n], solution.tour[(i + 1) % n]) + g.getWeight(solution.tour[j], solution.tour[(j + 1) % n]);;
 
-	// two opt (i, j)
 	int v7Cost = g.getWeight(solution.tour[i], solution.tour[j]) + g.getWeight(solution.tour[(j + 1) % n], solution.tour[(i + 1) % n]) + g.getWeight(solution.tour[k], solution.tour[(k + 1) % n]);;
 
 	vector<int> costs = {v1Cost, v2Cost, v3Cost, v4Cost, v5Cost, v6Cost, v7Cost};
@@ -354,7 +328,6 @@ void threeOpt(TSPSolution &solution, Graph &g)
 				{
 					tempImproved = bestSolution(solution, g, i, j, k);
 					if (tempImproved == 1) {
-						// cout << "are we improving? " << endl; 
 						improved = tempImproved;
 					}
 				}

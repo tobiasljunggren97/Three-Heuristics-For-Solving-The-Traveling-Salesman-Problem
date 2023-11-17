@@ -308,25 +308,14 @@ TSPSolution christofides(Graph &g)
   //3. Add new edges to neighbourlist (duplicates allowed) to get multigraph
   //4. Generate Eularian tour from multigraph with duplicate edges
   //5. Generate TSP tour from Eularian tour
-  Stopwatch stopwatch = Stopwatch();
-  stopwatch.start("Prims");
   
   prims(g);
-  stopwatch.stop();
-  
-  stopwatch.start("Hungarian");
-  hungarian(g);
-  stopwatch.stop();
-  
 
-  
-  stopwatch.start("Eulerian tour");
+  hungarian(g);
+
   vector<int> eulerianTour = eulerian_tour(g);
-  stopwatch.stop();
   
-  stopwatch.start("TSP tour");
   TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
-  stopwatch.stop();
   
 
   
@@ -337,7 +326,6 @@ TSPSolution christofides(Graph &g)
   path = christofidesSolution.tour;
   cout << "Tour before three opt:" << endl; 
   for (int i = 0; i < path.size()-1; i++) {
-    
     cout << path[i] << "->";
     thecost += g.getWeight(path[i], path[i+1]);
   }
@@ -357,3 +345,5 @@ TSPSolution christofides(Graph &g)
   // cout << "final cost: " << localImpr.cost << endl;
   return localImpr;
 }
+
+

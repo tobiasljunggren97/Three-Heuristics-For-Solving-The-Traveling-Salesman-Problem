@@ -12,6 +12,7 @@
 #include <fstream>
 
 using namespace std;
+#define NR_OF_RUNS 10
 
 void printSolution(TSPSolution &solution, Graph &g)
 {
@@ -67,7 +68,7 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         int NNcost = 0;
         TSPSolution solution;
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             TSPSolution bestNNSolution;
             bestNNSolution.cost = numeric_limits<int>::max();
 
@@ -78,6 +79,7 @@ void benchmarking(ofstream &myfile, string filename){
             generateRandomVector(randomVector, size, 0, g.getN());
             for (int i = 0; i < size; i++) {
                 solution = nearestNeighbor(g, randomVector[i]);
+                solution = twoOpt(solution, g);
                 if (solution.cost < bestNNSolution.cost) {
                     bestNNSolution = solution;
                 }
@@ -86,13 +88,12 @@ void benchmarking(ofstream &myfile, string filename){
             NNcost += bestNNSolution.cost;
         }
         double NNWithRandomTime = stopwatch.stop();
-        NNWithRandomTime /= 1000;
-        NNcost /= 1000;
+        NNWithRandomTime /= NR_OF_RUNS;
+        NNcost /= NR_OF_RUNS;
         
         myfile << "NN with max 25 random starting points: " << endl;
         myfile << "Time: " << NNWithRandomTime << endl;
         myfile << "Cost: " << NNcost << endl;
-        myfile << endl;
 
     }
 
@@ -101,12 +102,13 @@ void benchmarking(ofstream &myfile, string filename){
         TSPSolution solution;
         int runCount = 0;
         stopwatch.start("NN with 0 as starting point");
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             solution = nearestNeighbor(g, 0);
+            solution = twoOpt(solution, g);
             runCount++;
         }
         double NNWithZeroTime = stopwatch.stop();
-        NNWithZeroTime /= 1000;
+        NNWithZeroTime /= NR_OF_RUNS;
         myfile << "NN with 0 as starting point: " << endl;
         myfile << "Time: " << NNWithZeroTime << endl;
         myfile << "Cost: " << solution.cost << endl;
@@ -116,12 +118,13 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         TSPSolution solution;
         stopwatch.start("Greedy");
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             solution = greedy(g);
+            solution = twoOpt(solution, g);
             runCount++;
         }
         double greedyTime = stopwatch.stop();
-        greedyTime /= 1000;
+        greedyTime /= NR_OF_RUNS;
         myfile << "Greedy: " << endl;
         myfile << "Time: " << greedyTime << endl;
         myfile << "Cost: " << solution.cost << endl;
@@ -132,14 +135,15 @@ void benchmarking(ofstream &myfile, string filename){
         int runCount = 0;
         double totChristTime = 0;
         TSPSolution solution;
-        while (runCount < 1000) {
+        while (runCount < NR_OF_RUNS) {
             Graph f  = Graph(filename);
             stopwatch.start("Christofides");
             solution = christofides(f);
+            solution = twoOpt(solution, g);
             totChristTime += stopwatch.stop();
             runCount++;
         }
-        totChristTime /= 1000;
+        totChristTime /= NR_OF_RUNS;
         myfile << "Christofides: " << endl;
         myfile << "Time: " << totChristTime << endl;
         myfile << "Cost: " << solution.cost << endl;
