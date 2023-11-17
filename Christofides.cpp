@@ -429,50 +429,45 @@ void oldhungarian(Graph &g){
 
 TSPSolution christofides(Graph &g)
 {
-  Stopwatch stopwatch = Stopwatch();
-  stopwatch.start("Prims");
+
   // Run prims algorithm to get neighbourlist
   prims(g);
-  stopwatch.stop();
   // Create S = { i : len(neightbours(i)) % 2 != 0 }
-  stopwatch.start("Hungarian");
   hungarian(g);
-  stopwatch.stop();
   // Add new edges to neighbourlist (duplicates allowed) to get multigraph
 
   // Generate Eularian tour from multigraph with duplicate edges
-  stopwatch.start("Eulerian tour");
   vector<int> eulerianTour = eulerian_tour(g);
-  stopwatch.stop();
   // Generate TSP tour from Eularian tour
-  stopwatch.start("TSP tour");
   TSPSolution christofidesSolution = tsp_tour(eulerianTour, g);
-  stopwatch.stop();
   
 
   
-  TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
-  vector<int> path = twoOptSol.tour;
-  cout << "Cost for two opt: " << twoOptSol.cost << endl;
-  int thecost = 0;
-  path = christofidesSolution.tour;
-  cout << "Tour before three opt:" << endl; 
-  for (int i = 0; i < path.size()-1; i++) {
+  // TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
+  // vector<int> path = twoOptSol.tour;
+  // cout << "Cost for two opt: " << twoOptSol.cost << endl;
+  // int thecost = 0;
+  // path = christofidesSolution.tour;
+  // cout << "Tour before three opt:" << endl; 
+  // for (int i = 0; i < path.size()-1; i++) {
     
-    cout << path[i] << "->";
-    thecost += g.getWeight(path[i], path[i+1]);
-  }
-  cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
-  thecost = 0; 
+  //   cout << path[i] << "->";
+  //   thecost += g.getWeight(path[i], path[i+1]);
+  // }
+  // cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
+  // thecost = 0; 
 
-  threeOpt(christofidesSolution, g);
-  cout << "Cost for three opt: " << christofidesSolution.cost << endl;
-  path = christofidesSolution.tour;
-  for (int i = 0; i < path.size()-1; i++) {
-    cout << path[i] << "->";
-    thecost += g.getWeight(path[i], path[i+1]);
-  }
-  cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
+  // threeOpt(christofidesSolution, g);
+  // cout << "Cost for three opt: " << christofidesSolution.cost << endl;
+  // path = christofidesSolution.tour;
+  // for (int i = 0; i < path.size()-1; i++) {
+  //   cout << path[i] << "->";
+  //   thecost += g.getWeight(path[i], path[i+1]);
+  // }
+  // cout << path[path.size()-1] << ".\nCost: " << thecost << endl;
+
+
+
   // cout << "MATRIX: " << endl; 
   // g.printWeightMatrix();
   // stopwatch.start("Simmulated Annealing with Two opt");
@@ -484,9 +479,9 @@ TSPSolution christofides(Graph &g)
   // TSPSolution twoOptSol = twoOpt(christofidesSolution, g);
 
   // cout << "cost with two opt only: " << twoOptSol.cost << endl;
-  TSPSolution localImpr = twoOpt(christofidesSolution, g);
+  // TSPSolution localImpr = twoOpt(christofidesSolution, g);
   // cout << "final cost: " << localImpr.cost << endl;
-  return localImpr;
+  return christofidesSolution;
 }
 
 // // // SAVING OLD CHRISTOFIDES HERE JUST IN CASE.
