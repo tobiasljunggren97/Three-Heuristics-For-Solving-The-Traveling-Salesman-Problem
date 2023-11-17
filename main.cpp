@@ -79,6 +79,7 @@ void benchmarking(ofstream &myfile, string filename){
             generateRandomVector(randomVector, size, 0, g.getN());
             for (int i = 0; i < size; i++) {
                 solution = nearestNeighbor(g, randomVector[i]);
+                solution = twoOpt(solution, g);
                 if (solution.cost < bestNNSolution.cost) {
                     bestNNSolution = solution;
                 }
@@ -103,6 +104,7 @@ void benchmarking(ofstream &myfile, string filename){
         stopwatch.start("NN with 0 as starting point");
         while (runCount < NR_OF_RUNS) {
             solution = nearestNeighbor(g, 0);
+            solution = twoOpt(solution, g);
             runCount++;
         }
         double NNWithZeroTime = stopwatch.stop();
@@ -118,6 +120,7 @@ void benchmarking(ofstream &myfile, string filename){
         stopwatch.start("Greedy");
         while (runCount < NR_OF_RUNS) {
             solution = greedy(g);
+            solution = twoOpt(solution, g);
             runCount++;
         }
         double greedyTime = stopwatch.stop();
@@ -136,6 +139,7 @@ void benchmarking(ofstream &myfile, string filename){
             Graph f  = Graph(filename);
             stopwatch.start("Christofides");
             solution = christofides(f);
+            solution = twoOpt(solution, g);
             totChristTime += stopwatch.stop();
             runCount++;
         }
@@ -149,7 +153,7 @@ void benchmarking(ofstream &myfile, string filename){
 int main() {
 
     ofstream myfile;
-    myfile.open("../benchmarking.txt");
+    myfile.open("../benchmarkingWith2OPT.txt");
     myfile << "Benchmarking results" << endl;
     myfile << "---------------------" << endl;
     myfile << endl;
